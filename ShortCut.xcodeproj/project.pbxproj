@@ -97,6 +97,7 @@
 		997CD11627980CEB009EE598 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B7541A1127831C7B00B2A6E5 /* WebView.swift */,
 				B7F411D82771F351008FC313 /* MainMenu.swift */,
 				B7F411DC277207E3008FC313 /* MachineInfo.swift */,
 				B7F411DE2772139C008FC313 /* CallClient.swift */,
@@ -148,7 +149,6 @@
 				99CAFB8827A0347100ACAB0A /* Lottie */,
 				994FDB892796FCE70087D68C /* GoogleService-Info.plist */,
 				B7809EB12770BA7500D1FA1C /* Preview Content */,
-				B7541A1127831C7B00B2A6E5 /* WebView.swift */,
 			);
 			path = ShortCut;
 			sourceTree = "<group>";
