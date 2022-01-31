@@ -87,7 +87,7 @@ struct CallClient: View {
             }
             
             Spacer()
-        }.frame(height: UIScreen.screenHeight - 100)
+        }//.frame(height: UIScreen.screenHeight - 100)
     }
 }
 

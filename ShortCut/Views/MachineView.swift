@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MachineView: View{
+    @EnvironmentObject var model: ViewModel
     var machine: Machine
     var showMachineFile: Bool = false
     var showCircuitDiagram: Bool = false
@@ -66,6 +67,19 @@ struct MachineView: View{
                 }
                 .background(Color(hue: 0.59, saturation: 1.0, brightness: 0.692))
                 .cornerRadius(4)
+            }
+            Button{
+                model.addMachineToSavedMachines(ofUserID: model.currentUser.relatedUID, MachineID: machine.id)
+                
+            } label: {
+                HStack{
+                Text("Maschine speichern")
+                        .font(.title)
+                Image(systemName: "plus.circle.fill")
+                    .resizable()
+                    .frame(width: 25, height: 25)
+                    .padding(10)
+                }
             }
             Spacer(minLength: 70)
         }

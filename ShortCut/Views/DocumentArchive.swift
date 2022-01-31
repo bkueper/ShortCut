@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import Firebase
 struct DocumentArchive: View {
     @EnvironmentObject var model: ViewModel
     

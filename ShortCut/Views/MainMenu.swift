@@ -15,7 +15,6 @@ struct MainMenu: View {
     @State var showConfirmationDialog = false
     
     var body: some View {
-        Text(String(model.savedMachines.count))
         TabView{
             FirebaseDemo()
                 .tabItem{
@@ -42,6 +41,7 @@ struct MainMenu: View {
         }.confirmationDialog("Wollen Sie sich wirklich ausloggen?", isPresented: $showConfirmationDialog,titleVisibility: .visible) {
             Button("Ausloggen",role: .destructive) {
                 do{
+                    model.savedMachines.removeAll()
                     let currentUser = Auth.auth().currentUser?.uid
                     try Auth.auth().signOut()
                     print("Successfully logged out the User: \(String(describing: currentUser))")

@@ -15,7 +15,7 @@ class ViewModel: ObservableObject {
     @Published var email: String = ""
     @Published var phoneNumber: String = ""
     
-    @Published var currentUser: User = User(id: "", relatedUID: "", firstName: "", lastName: "", email: "", role: "")
+    @Published var currentUser: User = User(id: "", relatedUID: "", firstName: "", lastName: "", email: "", role: "",savedMachines: [""])
     @Published var machineList = [Machine]()
     @Published var customerList = [Customer]()
     @Published var userList = [User]()
@@ -27,7 +27,7 @@ class ViewModel: ObservableObject {
     }
     func addUser(relatedUID: String, firstName: String, lastName: String, email: String, role: String){
         let db = Firestore.firestore()
-        db.collection("Users").addDocument(data: ["RelatedUID": relatedUID, "FirstName": firstName, "LastName": lastName, "EMail": email,"Role": role]){ error in
+        db.collection("Users").addDocument(data: ["RelatedUID": relatedUID, "FirstName": firstName, "LastName": lastName, "EMail": email,"Role": role, "SavedMachines": [String]()]){ error in
             if error == nil {
                 self.getAllUsers()
             }
@@ -77,7 +77,8 @@ class ViewModel: ObservableObject {
                                            firstName:  d["FirstName"] as? String ?? "",
                                            lastName: d["LastName"] as? String ?? "",
                                            email: d["EMail"] as? String ?? "",
-                                           role: d["Role"] as? String ?? "")
+                                        role: d["Role"] as? String ?? "",
+                                        savedMachines: d["SavedMachines"] as? [String] ?? [""]  )
                         }
                     }
                 }
@@ -168,31 +169,32 @@ class ViewModel: ObservableObject {
             return user
         }else{
             print("Couldnt find a user")
-            return User(id: "Default", relatedUID: "Default",firstName: "Default",lastName: "Default",email: "Default",role: "Default")
+            return User(id: "Default", relatedUID: "Default",firstName: "Default",lastName: "Default",email: "Default",role: "Default",savedMachines: ["Default"])
         }
     }
-    
-    func getAllSavedMachinesOfUser(UID: String){
+
+    func addMachineToSavedMachines(ofUserID: String, MachineID: String){
         let db = Firestore.firestore()
-        print(db.collection("Users").document(getUserByRelatedUID(UID: UID).id).collection("SavedMachines"))
-        db.collection("Users").document(getUserByRelatedUID(UID: UID).id).collection("SavedMachines").getDocuments { snapshot, error in
+        db.collection("Users").document(getUserByRelatedUID(UID: ofUserID).id).updateData([
+    
+            "SavedMachines": FieldValue.arrayUnion([MachineID])
+        ])
+        if(!valueAlreadyInArray(array: savedMachines, Value: MachineID)){
+            self.savedMachines.append(MachineID)
+        }
             
-            if error == nil {
-                
-                if let snapshot = snapshot {
-                    
-                    //update list view in the main thread
-                    DispatchQueue.main.async {
-                        self.savedMachines = snapshot.documents.map { d in
-                            return String(d["MachineID"]as? String ?? "")
-                        }
-                    }
-                        
-                }
-                else {
-                    //handle Errors
-                }
+        
+    }
+    func valueAlreadyInArray(array: [String], Value: String) -> Bool{
+        for element in array{
+            if element == Value{
+                return true
             }
         }
+        return false
+    }
+    func getAllSavedMachinesOfUser(UID: String){
+        savedMachines = getUserByRelatedUID(UID: UID).savedMachines
+        print(savedMachines)
     }
 }

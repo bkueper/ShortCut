@@ -15,4 +15,5 @@ struct User: Identifiable{
     var lastName: String
     var email: String
     var role: String
+    var savedMachines: [String]
 }

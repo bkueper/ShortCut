@@ -37,6 +37,10 @@ struct LoginView: View {
                         TextField("Email", text: $email)
                             .keyboardType(.emailAddress)
                             .autocapitalization(.none)
+                            .onTapGesture {
+                                print("Tapped!")
+                                allowNavigation = false
+                            }
                         if !isLoginMode {
                             TextField("Vorname", text: $firstName)
                             TextField("Nachname", text: $lastName)
@@ -75,6 +79,7 @@ struct LoginView: View {
             .background(Color(.init(white: 0, alpha: 0.05))
                             .ignoresSafeArea())
         }.navigationBarHidden(true)
+            
     }
     
     private func handleAction() {
@@ -95,7 +100,7 @@ struct LoginView: View {
                 }
                 print("Successfully created user: \(result?.user.uid ?? "")")
                 model.addUser(relatedUID: result?.user.uid ?? "", firstName: firstName, lastName: lastName, email: email, role: "Standard")
-                model.currentUser = User(id: "Default", relatedUID: result?.user.uid ?? "", firstName: firstName, lastName: lastName, email: email, role: "Standard")
+                model.currentUser = User(id: "Default", relatedUID: result?.user.uid ?? "", firstName: firstName, lastName: lastName, email: email, role: "Standard",savedMachines: [""])
                 Auth.auth().signIn(withEmail: email, password: password) { result, err in
                     if let err = err {
                         print("Failed to login user: ", err)
@@ -125,6 +130,7 @@ struct LoginView: View {
             }
             print("Successfully logged in as user: \(result?.user.uid ?? "")")
             //model.currentUID = result?.user.uid ?? ""
+            allowNavigation = false
             model.currentUser = model.getUserByRelatedUID(UID: result?.user.uid ?? "")
             model.getAllSavedMachinesOfUser(UID: result?.user.uid ?? "")
             email = ""
