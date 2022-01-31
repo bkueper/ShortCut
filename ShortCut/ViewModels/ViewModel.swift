@@ -19,7 +19,7 @@ class ViewModel: ObservableObject {
     @Published var machineList = [Machine]()
     @Published var customerList = [Customer]()
     @Published var userList = [User]()
-    
+    @Published var savedMachines = [String]()
     init(){
         getAllCustomers()
         getAllUsers()
@@ -169,6 +169,30 @@ class ViewModel: ObservableObject {
         }else{
             print("Couldnt find a user")
             return User(id: "Default", relatedUID: "Default",firstName: "Default",lastName: "Default",email: "Default",role: "Default")
+        }
+    }
+    
+    func getAllSavedMachinesOfUser(UID: String){
+        let db = Firestore.firestore()
+        print(db.collection("Users").document(getUserByRelatedUID(UID: UID).id).collection("SavedMachines"))
+        db.collection("Users").document(getUserByRelatedUID(UID: UID).id).collection("SavedMachines").getDocuments { snapshot, error in
+            
+            if error == nil {
+                
+                if let snapshot = snapshot {
+                    
+                    //update list view in the main thread
+                    DispatchQueue.main.async {
+                        self.savedMachines = snapshot.documents.map { d in
+                            return String(d["MachineID"]as? String ?? "")
+                        }
+                    }
+                        
+                }
+                else {
+                    //handle Errors
+                }
+            }
         }
     }
 }

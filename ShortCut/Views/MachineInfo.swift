@@ -33,7 +33,6 @@ struct MachineInfo: View {
         })
     }
     init(){
-        //model.getAllMachines()
     }
     var body: some View {
         VStack{

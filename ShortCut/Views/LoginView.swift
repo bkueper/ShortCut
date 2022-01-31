@@ -50,6 +50,7 @@ struct LoginView: View {
                     .background(Color.white)
                     NavigationLink(destination: MainMenu(),isActive: .constant(allowNavigation)) {
                         Button {
+                            //model.getAllSavedMachinesOfUser(UID: "uVaYriS1vIWWht9Bap036ceAn602")
                             handleAction()
                         } label: {
                             HStack {
@@ -125,6 +126,7 @@ struct LoginView: View {
             print("Successfully logged in as user: \(result?.user.uid ?? "")")
             //model.currentUID = result?.user.uid ?? ""
             model.currentUser = model.getUserByRelatedUID(UID: result?.user.uid ?? "")
+            model.getAllSavedMachinesOfUser(UID: result?.user.uid ?? "")
             email = ""
             password = ""
             allowNavigation = true

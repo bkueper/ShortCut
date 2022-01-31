@@ -13,7 +13,9 @@ struct MainMenu: View {
     @EnvironmentObject var model: ViewModel
     @State var isShowingWelcomePopover = true
     @State var showConfirmationDialog = false
+    
     var body: some View {
+        Text(String(model.savedMachines.count))
         TabView{
             FirebaseDemo()
                 .tabItem{
@@ -33,7 +35,7 @@ struct MainMenu: View {
                 .tabItem{
                     Image(systemName: "envelope.fill")
                 }*/
-            DocumentArchive(allMachines: [["Maschine 1","Maschinenakte", "Bedienungsanleitung","Stückliste"],["Maschine 1","Maschinenakte", "Bedienungsanleitung","Stückliste"],["Maschine 1","Maschinenakte", "Bedienungsanleitung","Stückliste"]])
+            DocumentArchive()
                 .tabItem{
                     Image(systemName: "archivebox.circle.fill")
                 }
