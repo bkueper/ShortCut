@@ -20,9 +20,15 @@ struct LoginView: View {
     @State var allowNavigation = false
     
     var body: some View {
+            
+            content
+        
+        
+            
+    }
+    var content: some View {
         NavigationView {
             ScrollView {
-                
                 VStack(spacing: 16) {
                     Picker(selection: $isLoginMode, label: Text("Picker here")) {
                         Text("Login")
@@ -37,21 +43,28 @@ struct LoginView: View {
                         TextField("Email", text: $email)
                             .keyboardType(.emailAddress)
                             .autocapitalization(.none)
+                            .foregroundColor(Color.black.opacity(0.8))
                             .onTapGesture {
                                 print("Tapped!")
                                 allowNavigation = false
                             }
                         if !isLoginMode {
                             TextField("Vorname", text: $firstName)
+                                .foregroundColor(Color.black.opacity(0.8))
                             TextField("Nachname", text: $lastName)
+                                .foregroundColor(Color.black.opacity(0.8))
                         }
                         SecureField("Passwort", text: $password)
+                            .foregroundColor(Color.black.opacity(0.8))
                         if !isLoginMode {
                             SecureField("Passwort wiederholen", text: $passwordVerification)
+                                .foregroundColor(Color.black.opacity(0.8))
                         }
                     }
                     .padding(12)
-                    .background(Color.white)
+                    .background(Color.white.opacity(0.7))
+                    .cornerRadius(8)
+                    .shadow(color: Color.black, radius: 3, x: 5, y:2 )
                     NavigationLink(destination: MainMenu(),isActive: .constant(allowNavigation)) {
                         Button {
                             //model.getAllSavedMachinesOfUser(UID: "uVaYriS1vIWWht9Bap036ceAn602")
@@ -59,14 +72,19 @@ struct LoginView: View {
                         } label: {
                             HStack {
                                 Spacer()
-                                Text(isLoginMode ? "Log In" : "Account erstellen")
+                                Text(isLoginMode ? "Einloggen" : "Account erstellen")
+                                    .fontWeight(.semibold)
                                     .foregroundColor(.white)
-                                    .padding(.vertical, 10)
-                                    .font(.system(size: 14, weight: .semibold))
+                                    .padding()
+                                    .frame(maxWidth: .infinity, alignment: .center)
+                                    .background(Color(.blue))
+                                    .cornerRadius(8)
+                                    .shadow(color: Color.black, radius: 3, x: 5, y: 2)
+                                    
                                 Spacer()
-                            }.background(Color.blue)
+                            }
                             
-                        }
+                        }.padding(.vertical,35)
                     }
                     
                     Text(self.loginStatusMessage)
@@ -75,13 +93,12 @@ struct LoginView: View {
                 .padding()
                 
             }
-            .navigationTitle(isLoginMode ? "Log In" : "Account erstellen")
-            .background(Color(.init(white: 0, alpha: 0.05))
-                            .ignoresSafeArea())
-        }.navigationBarHidden(true)
+            .navigationTitle(isLoginMode ? "Log In" : "Account erstellen").foregroundColor(Color.white)
+            .background(LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 0.2398733385, green: 0, blue: 0.7439433396, alpha: 1)), Color(#colorLiteral(red: 0.1026695753, green: 0, blue: 0.3184194925, alpha: 1))]), startPoint: .topLeading,endPoint: .bottom).ignoresSafeArea())
             
+        }.navigationBarBackButtonHidden(true)
+            .navigationBarHidden(true)
     }
-    
     private func handleAction() {
         if isLoginMode {
             loginUser()

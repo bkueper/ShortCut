@@ -12,6 +12,9 @@ struct ShortCutApp: App {
     @StateObject var model = ViewModel()
     init(){
         FirebaseApp.configure()
+        let navBarAppearance = UINavigationBar.appearance()
+        navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+        navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
         
     }
     

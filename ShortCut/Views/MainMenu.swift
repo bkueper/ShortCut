@@ -13,31 +13,58 @@ struct MainMenu: View {
     @EnvironmentObject var model: ViewModel
     @State var isShowingWelcomePopover = true
     @State var showConfirmationDialog = false
-    
+    init(){
+        UITabBar.appearance().barTintColor = UIColor.blue
+        
+    }
     var body: some View {
+            content
+        
+    }
+    
+    var content: some View {
         TabView{
-            FirebaseDemo()
-                .tabItem{
-                    Image(systemName: "flame")
-                }.popover(isPresented: $isShowingWelcomePopover, content: {
-                    WelcomeView(firstName: model.currentUser.firstName)
-                })
-            MachineInfo()
+            
+            NavigationView{
+                MachineInfo()
+                    .navigationTitle("Maschineninfo")
+            }
                 .tabItem{
                     Image(systemName: "info.circle.fill")
-            }
-            CallClient()
-                .tabItem{
-                    Image(systemName: "phone.circle.fill")
                 }
-            /*ReportStatus()
+                .popover(isPresented: $isShowingWelcomePopover, content: {
+                    WelcomeView(firstName: model.currentUser.firstName)
+                })
+            NavigationView{
+                CallClient()
+                    .navigationTitle("Kunden anrufen")
+            }
+                    .tabItem{
+                        Image(systemName: "phone.circle.fill")
+                    }
+            NavigationView{
+                ReportStatus()
+                    .navigationTitle("Bauzustand melden")
+            }
                 .tabItem{
                     Image(systemName: "envelope.fill")
-                }*/
-            DocumentArchive()
+                }
+            NavigationView{
+                DocumentArchive()
+                    .navigationTitle("Gespeicherte Maschinen")
+            }
                 .tabItem{
                     Image(systemName: "archivebox.circle.fill")
                 }
+            if model.currentUser.role == "Admin" {
+                NavigationView{
+                    FirebaseDemo()
+                        .navigationTitle("Admineinstellungen")
+                }
+                    .tabItem{
+                        Image(systemName: "flame")
+                    }
+            }
         }.confirmationDialog("Wollen Sie sich wirklich ausloggen?", isPresented: $showConfirmationDialog,titleVisibility: .visible) {
             Button("Ausloggen",role: .destructive) {
                 do{
@@ -52,6 +79,9 @@ struct MainMenu: View {
             }
             Button("Abbrechen",role: .cancel){}
         }
+        .tint(Color.white)
+        .navigationTitle("")
+        .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {

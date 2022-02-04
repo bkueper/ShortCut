@@ -35,47 +35,46 @@ struct MachineInfo: View {
     init(){
     }
     var body: some View {
-        VStack{
-            Text("Maschineninfo")
-                .font(.largeTitle)
-                .fontWeight(.semibold)
-
-            Spacer()
-                
-            Text(representedText)
-                .font(.title)
-                .fontWeight(.regular)
-            
-            if isPresentingMachineViewLink {
-                let presentedMachine: Machine = model.getMachineById(id: scannedCode)
-                NavigationLink(destination: MachineView(machine: presentedMachine)){
-                    Text("Dokumente anzeigen")
-                        .fontWeight(.semibold)
-                        .foregroundColor(.white)
-                        .padding()
+        ZStack{
+            LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 0.2398733385, green: 0, blue: 0.7439433396, alpha: 1)), Color(#colorLiteral(red: 0.1026695753, green: 0, blue: 0.3184194925, alpha: 1))]), startPoint: .topLeading,endPoint: .bottom).ignoresSafeArea()
+            VStack{
+                    
+                Text(representedText)
+                    .font(.title)
+                    .fontWeight(.regular)
+                    .foregroundColor(Color.white)
+                if isPresentingMachineViewLink {
+                    let presentedMachine: Machine = model.getMachineById(id: scannedCode)
+                    NavigationLink(destination: MachineView(machine: presentedMachine)){
+                        Text("Dokumente anzeigen")
+                            .fontWeight(.semibold)
+                            .foregroundColor(.white)
+                            .padding()
+                    }
+                    .background(Color(hue: 0.59, saturation: 1.0, brightness: 0.692))
+                    .cornerRadius(12)
+                    Spacer()
+                        .frame(height: 30)
                 }
-                .background(Color(hue: 0.59, saturation: 1.0, brightness: 0.692))
-                .cornerRadius(12)
-                Spacer()
-                    .frame(height: 30)
-            }
-            
-            Button{
                 
-                self.isPresentingScanner = true
-            } label: {
-                Image(systemName: "qrcode.viewfinder")
-                    .resizable()
-                    .frame(width: 250, height: 250)
-                    .padding(10)
+                Button{
+                    
+                    self.isPresentingScanner = true
+                } label: {
+                    Image(systemName: "qrcode.viewfinder")
+                        .resizable()
+                        .frame(width: 250, height: 250)
+                        .padding(10)
+                }
+                .sheet(isPresented: $isPresentingScanner){
+                    self.scannerSheet
+                }
+                
+                Spacer()
+                
             }
-            .sheet(isPresented: $isPresentingScanner){
-                self.scannerSheet
-            }
-            
-            Spacer()
-            
-        }//.frame( height: UIScreen.screenHeight - 100)
+        }
+        //.frame( height: UIScreen.screenHeight - 100)
     }
 }
 

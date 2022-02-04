@@ -19,6 +19,8 @@
 		997CD11C27983215009EE598 /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997CD11B27983215009EE598 /* Customer.swift */; };
 		9986679A27A2B31900AFE6B8 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9986679927A2B31900AFE6B8 /* LoginView.swift */; };
 		9986679C27A2BD9300AFE6B8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9986679B27A2BD9300AFE6B8 /* User.swift */; };
+		99AAC89527A968C6006B8723 /* ReportStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AAC89427A968C6006B8723 /* ReportStatusView.swift */; };
+		99AAC89727A96D6F006B8723 /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AAC89627A96D6F006B8723 /* PhotoPicker.swift */; };
 		99AB0B3327A439F0007E618E /* QRCodeScanningAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 99AB0B3227A439F0007E618E /* QRCodeScanningAnimation.json */; };
 		99CAFB8727A0340900ACAB0A /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 99CAFB8627A0340900ACAB0A /* Lottie */; };
 		99CAFB8A27A0348900ACAB0A /* QRCodeAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 99CAFB8927A0348900ACAB0A /* QRCodeAnimation.json */; };
@@ -45,6 +47,8 @@
 		997CD11B27983215009EE598 /* Customer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Customer.swift; sourceTree = "<group>"; };
 		9986679927A2B31900AFE6B8 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		9986679B27A2BD9300AFE6B8 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		99AAC89427A968C6006B8723 /* ReportStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportStatusView.swift; sourceTree = "<group>"; };
+		99AAC89627A96D6F006B8723 /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
 		99AB0B3227A439F0007E618E /* QRCodeScanningAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = QRCodeScanningAnimation.json; sourceTree = "<group>"; };
 		99CAFB8927A0348900ACAB0A /* QRCodeAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = QRCodeAnimation.json; sourceTree = "<group>"; };
 		99CAFB8B27A034FB00ACAB0A /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
@@ -102,6 +106,7 @@
 				B7F411DC277207E3008FC313 /* MachineInfo.swift */,
 				B7F411DE2772139C008FC313 /* CallClient.swift */,
 				B7F411E027721638008FC313 /* ReportStatus.swift */,
+				99AAC89427A968C6006B8723 /* ReportStatusView.swift */,
 				B7F411E227734333008FC313 /* DocumentArchive.swift */,
 				B7809EAB2770BA7200D1FA1C /* ShortCutApp.swift */,
 				B7809EAD2770BA7200D1FA1C /* ContentView.swift */,
@@ -110,6 +115,7 @@
 				997743552799647200A2FD73 /* MachineView.swift */,
 				99CAFB8B27A034FB00ACAB0A /* LottieView.swift */,
 				9986679927A2B31900AFE6B8 /* LoginView.swift */,
+				99AAC89627A96D6F006B8723 /* PhotoPicker.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -255,8 +261,10 @@
 				99CAFB8C27A034FB00ACAB0A /* LottieView.swift in Sources */,
 				B7F411D92771F351008FC313 /* MainMenu.swift in Sources */,
 				997CD11A2798255D009EE598 /* CustomerView.swift in Sources */,
+				99AAC89527A968C6006B8723 /* ReportStatusView.swift in Sources */,
 				9986679A27A2B31900AFE6B8 /* LoginView.swift in Sources */,
 				B7809EAC2770BA7200D1FA1C /* ShortCutApp.swift in Sources */,
+				99AAC89727A96D6F006B8723 /* PhotoPicker.swift in Sources */,
 				B7F411DF2772139C008FC313 /* CallClient.swift in Sources */,
 				B7541A1227831C7B00B2A6E5 /* WebView.swift in Sources */,
 				9986679C27A2BD9300AFE6B8 /* User.swift in Sources */,
@@ -404,7 +412,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -435,7 +443,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

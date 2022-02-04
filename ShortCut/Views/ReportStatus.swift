@@ -6,33 +6,76 @@
 //
 
 import SwiftUI
+import Firebase
+import CodeScanner
 
 struct ReportStatus: View {
-    var body: some View {
-        VStack {
-            Text("Bauzustand melden")
-                .font(.largeTitle)
-                .fontWeight(.semibold)
-            Text("Scannen Sie den QR- Code an der Maschine")
-                .font(.subheadline)
-            Spacer()
-            Image(systemName: "qrcode.viewfinder")
-                .resizable()
-                .frame(width: 250, height: 250)
-                .padding(10)
-            HStack{
-                Spacer()
-                MyButton(label:"Zustand melden")
-
-                Spacer()
-                MyButton(label:"Abbrechen")
-                Spacer()
+    @EnvironmentObject var model: ViewModel
+    //@ObservedObject var model = ViewModel()
+    @State var isPresentingScanner = false
+    @State var isPresentingReportViewLink = false
+    @State var scannedCode: String = ""
+    @State var representedText = "Scanne einen QR- Code."
+    
+   
+    
+    var scannerSheet: some View{
+        CodeScannerView(
+            codeTypes: [.qr],
+            completion: {result in
+                if case let .success(code) = result{
+                
+                self.scannedCode = code.string
+                self.isPresentingScanner = false
+                self.isPresentingReportViewLink = true
+                self.representedText = model.getMachineById(id: scannedCode).name
             }
-            Spacer()
+        })
+    }
+    init(){
+    }
+    var body: some View {
+        ZStack{
+            LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 0.2398733385, green: 0, blue: 0.7439433396, alpha: 1)), Color(#colorLiteral(red: 0.1026695753, green: 0, blue: 0.3184194925, alpha: 1))]), startPoint: .topLeading,endPoint: .bottom).ignoresSafeArea()
+            VStack{
+                Text(representedText)
+                    .font(.title)
+                    .fontWeight(.regular)
+                    .foregroundColor(Color.white)
+                if isPresentingReportViewLink {
+                    let reportedMachine: Machine = model.getMachineById(id: scannedCode)
+                    NavigationLink(destination: ReportStatusView(machine: reportedMachine)){
+                        Text("Maschinenbericht erstellen")
+                            .fontWeight(.semibold)
+                            .foregroundColor(.white)
+                            .padding()
+                    }
+                    .background(Color(hue: 0.59, saturation: 1.0, brightness: 0.692))
+                    .cornerRadius(12)
+                    Spacer()
+                        .frame(height: 30)
+                }
+                
+                Button{
+                    
+                    self.isPresentingScanner = true
+                } label: {
+                    Image(systemName: "qrcode.viewfinder")
+                        .resizable()
+                        .frame(width: 250, height: 250)
+                        .padding(10)
+                }
+                .sheet(isPresented: $isPresentingScanner){
+                    self.scannerSheet
+                }
+                
+                Spacer()
+                
+            }//.frame( height: UIScreen.screenHeight - 100)
         }
-        .frame( height: UIScreen.screenHeight - 100)
     }
 }
+
 
 struct ReportStatus_Previews: PreviewProvider {
     static var previews: some View {

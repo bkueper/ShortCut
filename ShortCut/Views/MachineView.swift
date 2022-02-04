@@ -33,8 +33,7 @@ struct MachineView: View{
     
     }
     var body: some View{
-        
-        VStack(alignment: .leading){
+            VStack(alignment: .leading){
             Text(machine.name)
                 .font(.title)
                 .fontWeight(.bold)
@@ -73,22 +72,19 @@ struct MachineView: View{
                 
             } label: {
                 HStack{
-                Text("Maschine speichern")
-                        .font(.title)
-                Image(systemName: "plus.circle.fill")
-                    .resizable()
-                    .frame(width: 25, height: 25)
-                    .padding(10)
-                }
+                    Text("Maschine speichern")
+                    Image(systemName: "plus.circle.fill")
+                    
+                }.font(.title)
             }
             Spacer(minLength: 70)
-        }
+            }
+            
     }
     
     
 }
-
-struct MachineListSingleElement: View {
+struct MachineInfoView: View {
     var machine: Machine
     var customer: Customer
     init(machine: Machine, customer: Customer){
@@ -97,46 +93,72 @@ struct MachineListSingleElement: View {
         
     }
     var body: some View {
-        
-        HStack{
-            Image(systemName: "scanner.fill")
-                .resizable()
-                .frame(width: 40, height: 40)
-            VStack(alignment: .leading){
-                Text(machine.name)
-                    .font(.headline)
-                    
-                Text("Seriennummer: " + machine.serialNumber)
-                    .font(.subheadline)
-                
-                Text("Kunde: " + customer.name)
-                    .font(.subheadline)
             
-                
+            VStack{
+                ZStack(alignment: .topLeading){
+                    Color.white.opacity(0.60)
+                        .cornerRadius(8)
+                        .shadow(radius: 8)
+                    VStack(alignment: .leading){
+                        VStack(alignment: .leading){
+                            Text(machine.name)
+                                .font(.title)
+                                .fontWeight(.bold)
+                                .padding(EdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5))
+                                .foregroundColor(Color.black.opacity(0.7))
+                            Text("Seriennummer: \(machine.serialNumber)")
+                                .font(.title2)
+                                .fontWeight(.semibold)
+                                .padding(EdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5))
+                                .foregroundColor(Color.black.opacity(0.7))
+                        }
+                        Spacer()
+                        VStack(alignment: .leading){
+                            Text("Kunde: \(customer.name)")
+                                .font(.title)
+                                .fontWeight(.semibold)
+                                .padding(EdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5))
+                                .foregroundColor(Color.black.opacity(0.7))
+                            HStack{
+                                HStack{
+                                    Image(systemName: "mail.fill")
+                                    Text(customer.email)
+                                    }.foregroundColor(Color.black.opacity(0.7))
+                                        .padding(EdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5))
+                                HStack{
+                                    Image(systemName: "phone.fill")
+                                    Text("Kundentelefonummer")
+                                    }.padding(EdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5))
+                                        .foregroundColor(Color.black.opacity(0.7))
+                            }
+                        }
+                        }
+                }.frame(width: 384, height: 100)
             }
-        }.onTapGesture{
-        
-            
         }
-    }
 }
+
 
 struct MachineList: View {
     //@ObservedObject var model = ViewModel()
     @EnvironmentObject var model: ViewModel
     var body: some View {
         
-        VStack {
-            Text("Maschinen")
-                .font(.largeTitle)
-                .fontWeight(.semibold)
-            List(0..<model.machineList.count, id: \.self){
-                machine in
-                VStack{
-                    MachineListSingleElement(machine: model.machineList[machine], customer: model.getCustomerById(id: model.machineList[machine].customerId))
+    ScrollView(.vertical){
+        VStack(spacing: 10){
+            ForEach((1..<model.machineList.count), id: \.self) {machine in
+                MachineInfoView(machine: model.machineList[machine], customer: model.getCustomerById(id: model.machineList[machine].customerId)).padding()
                 }
-            }
-        }
+        }.frame( height: 500)
+            .padding()
+    }
+//            List(0..<model.machineList.count, id: \.self){
+//                machine in
+//                VStack{
+//                    MachineInfoView(machine: model.machineList[machine], customer: model.getCustomerById(id: model.machineList[machine].customerId))
+//                }
+//            }
+       
     }
     init(){
         //model.getAllCustomers()
