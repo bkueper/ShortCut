@@ -84,6 +84,7 @@ struct MachineView: View{
     
     
 }
+
 struct MachineInfoView: View {
     var machine: Machine
     var customer: Customer
@@ -140,7 +141,6 @@ struct MachineInfoView: View {
 
 
 struct MachineList: View {
-    //@ObservedObject var model = ViewModel()
     @EnvironmentObject var model: ViewModel
     var body: some View {
         
@@ -149,20 +149,143 @@ struct MachineList: View {
             ForEach((1..<model.machineList.count), id: \.self) {machine in
                 MachineInfoView(machine: model.machineList[machine], customer: model.getCustomerById(id: model.machineList[machine].customerId)).padding()
                 }
-        }.frame( height: 500)
-            .padding()
+            }.frame( height: 500)
+                .padding()
+        }
     }
-//            List(0..<model.machineList.count, id: \.self){
-//                machine in
-//                VStack{
-//                    MachineInfoView(machine: model.machineList[machine], customer: model.getCustomerById(id: model.machineList[machine].customerId))
-//                }
-//            }
-       
+}
+struct MachineMenu: View {
+    @EnvironmentObject var model: ViewModel
+    var machine: Machine
+    var showMachineFile: Bool = false
+    var showCircuitDiagram: Bool = false
+    var showOperationManual: Bool = false
+    @State var isPresentingWebsiteSheet: Bool = false
+    @State var documentURL: String = ""
+    init(machine: Machine){
+        UITableView.appearance().backgroundColor = .clear
+        self.machine = machine
+        if (machine.machineFileURL != ""){
+            self.showMachineFile = true
+        }
+        if (machine.circuitDiagramURL != ""){
+            self.showCircuitDiagram = true
+        }
+        if (machine.operationManualURL != ""){
+            self.showOperationManual = true
+        }
     }
-    init(){
-        //model.getAllCustomers()
-        //model.getAllMachines()
+var body: some View{
+    
+    ZStack{
+        LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 0.2398733385, green: 0, blue: 0.7439433396, alpha: 1)), Color(#colorLiteral(red: 0.1026695753, green: 0, blue: 0.3184194925, alpha: 1))]), startPoint: .topLeading,endPoint: .bottom).ignoresSafeArea()
+        Form {
+            //ROLLE: alle Hersteller
+            Section(header: Text("Maschinendateien").foregroundColor(Color.white), footer: Text("Einen der Menüpunkte anklicken um jeweilige Datei anzeigen zu lassen").foregroundColor(Color.white)){
+                    if showMachineFile{
+                        NavigationLink(destination: SwiftUIWebView(url: URL(string: machine.machineFileURL))){
+                            Text("Maschinenakte")
+                        }
+                    }
+                    if showCircuitDiagram{
+                        NavigationLink(destination: SwiftUIWebView(url: URL(string: machine.circuitDiagramURL))){
+                            Text("Schaltplan")
+                        }
+                    }
+                    if showOperationManual{
+                        NavigationLink(destination: SwiftUIWebView(url: URL(string: machine.operationManualURL))){
+                            Text("Bedienungsanleitung")
+                        }
+                    }
+                }
+            Section(header: Text("Kundenservice").foregroundColor(Color.white), footer: Text("Kontaktieren Sie bei Fragen oder Problemen unseren Kundenservice.").foregroundColor(Color.white)){
+                NavigationLink(destination: SpareView()){
+                    Text("Ersatzteile bestellen")
+                    }
+                NavigationLink(destination: Text("Test")){
+                    Text("Krause Service anrufen")
+                    }
+                NavigationLink(destination: Text("Test")){
+                    Text("Krause Service E- Mail")
+                    }
+                NavigationLink(destination: Text("Test")){
+                    Text("Krause Ersatzteile E- Mail")
+                    }
+                }
+            Section(header: Text("Bauzustand").foregroundColor(Color.white), footer: Text("Die abgehakten Bauzustände sind bereits erreicht. Wenn Sie einen neuen Bauzustand erreicht haben markieren Sie den Bauzustand als erledigt.").foregroundColor(Color.white)){
+                Group{
+                    HStack{
+                        Text("Maschine angelegt")
+                        Spacer()
+                        Image(systemName: "checkmark.square")
+                        }
+                    HStack{
+                        Text("Montagebeginn")
+                        Spacer()
+                        Image(systemName: "checkmark.square")
+                        }
+                    HStack{
+                        Text("Elektrik ok")
+                        Spacer()
+                        Image(systemName: "checkmark.square")
+                        }
+                    HStack{
+                        Text("Montageende")
+                        Spacer()
+                        Image(systemName: "checkmark.square")
+                        }
+                    HStack{
+                        Text("Inbetriebname ok")
+                        Spacer()
+                        Image(systemName: "checkmark.square")
+                        }
+                    HStack{
+                        Text("Verpackt")
+                        Spacer()
+                        Image(systemName: "checkmark.square")
+                        }
+                    HStack{
+                        Text("Versendet")
+                        Spacer()
+                        Image(systemName: "checkmark.square")
+                        }
+                    HStack{
+                        Text("Angeliefert")
+                        Spacer()
+                        Image(systemName: "checkmark.square")
+                        }
+                    HStack{
+                        Text("Installiert")
+                        Spacer()
+                        Image(systemName: "checkmark.square")
+                        }
+                    HStack{
+                        Text("Wartung planen")
+                        Spacer()
+                        Image(systemName: "checkmark.square")
+                        }
+                }
+                Group{
+                    HStack{
+                        Text("Wartung durchgeführt")
+                        Spacer()
+                        Image(systemName: "checkmark.square")
+                        }
+                    HStack{
+                        Text("Störung gemeldet")
+                        Spacer()
+                        Image(systemName: "checkmark.square")
+                        }
+                    HStack{
+                        Text("Störung behoben")
+                        Spacer()
+                        Image(systemName: "checkmark.square")
+                        }
+                    }
+                }
+            
+            }
+        }
     }
 }
 

@@ -18,7 +18,7 @@ struct ContentView: View {
                         Text("ShortCut")
                             .font(.largeTitle)
                             .fontWeight(.bold)
-                            .foregroundColor(Color(.blue))
+                            .foregroundColor(Color(.white))
                         LottieView(fileName: "QRCodeAnimation",isLooping: false)
                             .frame(width: 200, height: 200)
                             .colorInvert()

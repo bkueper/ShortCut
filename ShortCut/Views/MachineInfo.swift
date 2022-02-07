@@ -45,7 +45,7 @@ struct MachineInfo: View {
                     .foregroundColor(Color.white)
                 if isPresentingMachineViewLink {
                     let presentedMachine: Machine = model.getMachineById(id: scannedCode)
-                    NavigationLink(destination: MachineView(machine: presentedMachine)){
+                    NavigationLink(destination: MachineMenu(machine: presentedMachine)){
                         Text("Dokumente anzeigen")
                             .fontWeight(.semibold)
                             .foregroundColor(.white)
