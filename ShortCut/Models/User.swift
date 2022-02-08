@@ -5,7 +5,7 @@
 //  Created by Bjarne Küper on 27.01.22.
 //
 
-import SwiftUI
+
 import Foundation
 
 struct User: Identifiable{

@@ -29,6 +29,8 @@ struct MachineInfo: View {
                 self.isPresentingScanner = false
                 self.isPresentingMachineViewLink = true
                 self.representedText = model.getMachineById(id: scannedCode).name
+                model.currentMachine = model.getMachineById(id: scannedCode)
+                
             }
         })
     }

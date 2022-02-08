@@ -145,12 +145,12 @@ struct MachineList: View {
     var body: some View {
         
     ScrollView(.vertical){
-        VStack(spacing: 10){
+        //VStack(spacing: 10){
             ForEach((1..<model.machineList.count), id: \.self) {machine in
                 MachineInfoView(machine: model.machineList[machine], customer: model.getCustomerById(id: model.machineList[machine].customerId)).padding()
                 }
-            }.frame( height: 500)
-                .padding()
+            //}.frame( height: 200)
+                
         }
     }
 }
@@ -214,79 +214,15 @@ var body: some View{
                 }
             Section(header: Text("Bauzustand").foregroundColor(Color.white), footer: Text("Die abgehakten Bauzustände sind bereits erreicht. Wenn Sie einen neuen Bauzustand erreicht haben markieren Sie den Bauzustand als erledigt.").foregroundColor(Color.white)){
                 Group{
-                    HStack{
-                        Text("Maschine angelegt")
-                        Spacer()
-                        Image(systemName: "checkmark.square")
-                        }
-                    HStack{
-                        Text("Montagebeginn")
-                        Spacer()
-                        Image(systemName: "checkmark.square")
-                        }
-                    HStack{
-                        Text("Elektrik ok")
-                        Spacer()
-                        Image(systemName: "checkmark.square")
-                        }
-                    HStack{
-                        Text("Montageende")
-                        Spacer()
-                        Image(systemName: "checkmark.square")
-                        }
-                    HStack{
-                        Text("Inbetriebname ok")
-                        Spacer()
-                        Image(systemName: "checkmark.square")
-                        }
-                    HStack{
-                        Text("Verpackt")
-                        Spacer()
-                        Image(systemName: "checkmark.square")
-                        }
-                    HStack{
-                        Text("Versendet")
-                        Spacer()
-                        Image(systemName: "checkmark.square")
-                        }
-                    HStack{
-                        Text("Angeliefert")
-                        Spacer()
-                        Image(systemName: "checkmark.square")
-                        }
-                    HStack{
-                        Text("Installiert")
-                        Spacer()
-                        Image(systemName: "checkmark.square")
-                        }
-                    HStack{
-                        Text("Wartung planen")
-                        Spacer()
-                        Image(systemName: "checkmark.square")
-                        }
-                }
-                Group{
-                    HStack{
-                        Text("Wartung durchgeführt")
-                        Spacer()
-                        Image(systemName: "checkmark.square")
-                        }
-                    HStack{
-                        Text("Störung gemeldet")
-                        Spacer()
-                        Image(systemName: "checkmark.square")
-                        }
-                    HStack{
-                        Text("Störung behoben")
-                        Spacer()
-                        Image(systemName: "checkmark.square")
-                        }
+                    NavigationLink(destination: ReportStatus()){
+                        Text("Bauzustand melden")
                     }
-                }
+                
+                    }
             
+                }
             }
         }
     }
 }
-
 

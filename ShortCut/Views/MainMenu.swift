@@ -13,10 +13,7 @@ struct MainMenu: View {
     @EnvironmentObject var model: ViewModel
     @State var isShowingWelcomePopover = true
     @State var showConfirmationDialog = false
-    init(){
-        UITabBar.appearance().barTintColor = UIColor.blue
-        
-    }
+    
     var body: some View {
             content
         
@@ -24,17 +21,14 @@ struct MainMenu: View {
     
     var content: some View {
         TabView{
-            
-            NavigationView{
-                MachineInfo()
-                    .navigationTitle("Maschineninfo")
-            }
+            MachineInfo()
                 .tabItem{
                     Image(systemName: "info.circle.fill")
-                }
-                .popover(isPresented: $isShowingWelcomePopover, content: {
-                    WelcomeView(firstName: model.currentUser.firstName)
-                })
+                    }
+                    .popover(isPresented: $isShowingWelcomePopover, content: {
+                        WelcomeView(firstName: model.currentUser.firstName)
+                        })
+            /*
             NavigationView{
                 CallClient()
                     .navigationTitle("Kunden anrufen")
@@ -55,12 +49,11 @@ struct MainMenu: View {
             }
                 .tabItem{
                     Image(systemName: "archivebox.circle.fill")
-                }
+                }*/
             if model.currentUser.role == "Admin" {
-                NavigationView{
+                
                     FirebaseDemo()
-                        .navigationTitle("Admineinstellungen")
-                }
+                        
                     .tabItem{
                         Image(systemName: "flame")
                     }

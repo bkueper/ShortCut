@@ -16,15 +16,33 @@ class ViewModel: ObservableObject {
     @Published var phoneNumber: String = ""
     
     @Published var currentUser: User = User(id: "", relatedUID: "", firstName: "", lastName: "", email: "", role: "",savedMachines: [""])
+    @Published var currentMachine: Machine = Machine(id: "", customerId: "", name: "", serialNumber: "", machineFileURL: "", circuitDiagramURL: "", operationManualURL: "")
     @Published var machineList = [Machine]()
     @Published var customerList = [Customer]()
     @Published var userList = [User]()
     @Published var savedMachines = [String]()
+  
     init(){
         getAllCustomers()
         getAllUsers()
         getAllMachines()
     }
+    
+    func addMachineState(description: String, creatorUID: String, machineID: String, creationDate: Timestamp){
+        let db = Firestore.firestore()
+        db.collection("States").addDocument(data: ["Description": description, "CreatorUID": creatorUID, "MachineID": machineID, "CreationDate": creationDate]){
+            error in
+            if error == nil{
+                self.getAllSavedMachinesOfUser(UID: self.currentUser.relatedUID)
+                print("Added new MachineState!")
+            }else{
+                print("Failed to create State!")
+            }
+            
+        }
+    }
+    
+    
     func addUser(relatedUID: String, firstName: String, lastName: String, email: String, role: String){
         let db = Firestore.firestore()
         db.collection("Users").addDocument(data: ["RelatedUID": relatedUID, "FirstName": firstName, "LastName": lastName, "EMail": email,"Role": role, "SavedMachines": [String]()]){ error in
@@ -145,8 +163,7 @@ class ViewModel: ObservableObject {
             }
         }
     }
-    
-    func getCustomerById(id: String) -> Customer{
+        func getCustomerById(id: String) -> Customer{
         if let customer = customerList.first(where: {$0.id == id}){
             print(customer)
             return customer

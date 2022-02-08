@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import SwiftUI
+
 
 struct Customer: Identifiable{
     var id: String

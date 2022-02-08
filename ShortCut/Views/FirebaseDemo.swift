@@ -23,7 +23,7 @@ struct FirebaseDemo: View {
             LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 0.1612174783, green: 0, blue: 0.5, alpha: 1)), Color(#colorLiteral(red: 0.1026695753, green: 0, blue: 0.3184194925, alpha: 1))]), startPoint: .topLeading,endPoint: .bottom).ignoresSafeArea()
             VStack{
                 
-                //MachineList()
+                MachineList()
                 
                 Spacer()
                 
@@ -71,17 +71,9 @@ struct FirebaseDemo: View {
     
     
 }
-    init(){
-        
-        //model.getAllMachines()
-        //model.getAllCustomers()
-    }
+    
 }
 
 
 
-struct FirebaseDemo_Previews: PreviewProvider {
-    static var previews: some View {
-        FirebaseDemo()
-    }
-}
+

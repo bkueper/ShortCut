@@ -18,10 +18,11 @@
 		997CD11A2798255D009EE598 /* CustomerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997CD1192798255D009EE598 /* CustomerView.swift */; };
 		997CD11C27983215009EE598 /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997CD11B27983215009EE598 /* Customer.swift */; };
 		997D37F927B162C2006DB7F3 /* SpareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997D37F827B162C1006DB7F3 /* SpareView.swift */; };
+		9984B70527B27A9600CCE0EC /* MachineState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984B70427B27A9600CCE0EC /* MachineState.swift */; };
+		9984B70727B2ACBF00CCE0EC /* MachineStateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984B70627B2ACBF00CCE0EC /* MachineStateViewModel.swift */; };
 		9986679A27A2B31900AFE6B8 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9986679927A2B31900AFE6B8 /* LoginView.swift */; };
 		9986679C27A2BD9300AFE6B8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9986679B27A2BD9300AFE6B8 /* User.swift */; };
 		99AAC89527A968C6006B8723 /* ReportStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AAC89427A968C6006B8723 /* ReportStatusView.swift */; };
-		99AAC89727A96D6F006B8723 /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AAC89627A96D6F006B8723 /* PhotoPicker.swift */; };
 		99AB0B3327A439F0007E618E /* QRCodeScanningAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 99AB0B3227A439F0007E618E /* QRCodeScanningAnimation.json */; };
 		99CAFB8727A0340900ACAB0A /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 99CAFB8627A0340900ACAB0A /* Lottie */; };
 		99CAFB8A27A0348900ACAB0A /* QRCodeAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 99CAFB8927A0348900ACAB0A /* QRCodeAnimation.json */; };
@@ -47,10 +48,11 @@
 		997CD1192798255D009EE598 /* CustomerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerView.swift; sourceTree = "<group>"; };
 		997CD11B27983215009EE598 /* Customer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Customer.swift; sourceTree = "<group>"; };
 		997D37F827B162C1006DB7F3 /* SpareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpareView.swift; sourceTree = "<group>"; };
+		9984B70427B27A9600CCE0EC /* MachineState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineState.swift; sourceTree = "<group>"; };
+		9984B70627B2ACBF00CCE0EC /* MachineStateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineStateViewModel.swift; sourceTree = "<group>"; };
 		9986679927A2B31900AFE6B8 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		9986679B27A2BD9300AFE6B8 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		99AAC89427A968C6006B8723 /* ReportStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportStatusView.swift; sourceTree = "<group>"; };
-		99AAC89627A96D6F006B8723 /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
 		99AB0B3227A439F0007E618E /* QRCodeScanningAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = QRCodeScanningAnimation.json; sourceTree = "<group>"; };
 		99CAFB8927A0348900ACAB0A /* QRCodeAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = QRCodeAnimation.json; sourceTree = "<group>"; };
 		99CAFB8B27A034FB00ACAB0A /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 				997CD111279804CA009EE598 /* Machine.swift */,
 				997CD11B27983215009EE598 /* Customer.swift */,
 				9986679B27A2BD9300AFE6B8 /* User.swift */,
+				9984B70427B27A9600CCE0EC /* MachineState.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -96,6 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				997CD1142798057A009EE598 /* ViewModel.swift */,
+				9984B70627B2ACBF00CCE0EC /* MachineStateViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -103,6 +107,8 @@
 		997CD11627980CEB009EE598 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B7809EAB2770BA7200D1FA1C /* ShortCutApp.swift */,
+				B7809EAD2770BA7200D1FA1C /* ContentView.swift */,
 				B7541A1127831C7B00B2A6E5 /* WebView.swift */,
 				B7F411D82771F351008FC313 /* MainMenu.swift */,
 				B7F411DC277207E3008FC313 /* MachineInfo.swift */,
@@ -110,14 +116,11 @@
 				B7F411E027721638008FC313 /* ReportStatus.swift */,
 				99AAC89427A968C6006B8723 /* ReportStatusView.swift */,
 				B7F411E227734333008FC313 /* DocumentArchive.swift */,
-				B7809EAB2770BA7200D1FA1C /* ShortCutApp.swift */,
-				B7809EAD2770BA7200D1FA1C /* ContentView.swift */,
 				997CD11727980D8F009EE598 /* FirebaseDemo.swift */,
 				997CD1192798255D009EE598 /* CustomerView.swift */,
 				997743552799647200A2FD73 /* MachineView.swift */,
 				99CAFB8B27A034FB00ACAB0A /* LottieView.swift */,
 				9986679927A2B31900AFE6B8 /* LoginView.swift */,
-				99AAC89627A96D6F006B8723 /* PhotoPicker.swift */,
 				997D37F827B162C1006DB7F3 /* SpareView.swift */,
 			);
 			path = Views;
@@ -257,6 +260,7 @@
 				B7F411E327734333008FC313 /* DocumentArchive.swift in Sources */,
 				997743562799647200A2FD73 /* MachineView.swift in Sources */,
 				997CD11C27983215009EE598 /* Customer.swift in Sources */,
+				9984B70527B27A9600CCE0EC /* MachineState.swift in Sources */,
 				B7809EAE2770BA7200D1FA1C /* ContentView.swift in Sources */,
 				997CD112279804CA009EE598 /* Machine.swift in Sources */,
 				997CD11827980D8F009EE598 /* FirebaseDemo.swift in Sources */,
@@ -264,11 +268,11 @@
 				99CAFB8C27A034FB00ACAB0A /* LottieView.swift in Sources */,
 				997D37F927B162C2006DB7F3 /* SpareView.swift in Sources */,
 				B7F411D92771F351008FC313 /* MainMenu.swift in Sources */,
+				9984B70727B2ACBF00CCE0EC /* MachineStateViewModel.swift in Sources */,
 				997CD11A2798255D009EE598 /* CustomerView.swift in Sources */,
 				99AAC89527A968C6006B8723 /* ReportStatusView.swift in Sources */,
 				9986679A27A2B31900AFE6B8 /* LoginView.swift in Sources */,
 				B7809EAC2770BA7200D1FA1C /* ShortCutApp.swift in Sources */,
-				99AAC89727A96D6F006B8723 /* PhotoPicker.swift in Sources */,
 				B7F411DF2772139C008FC313 /* CallClient.swift in Sources */,
 				B7541A1227831C7B00B2A6E5 /* WebView.swift in Sources */,
 				9986679C27A2BD9300AFE6B8 /* User.swift in Sources */,
