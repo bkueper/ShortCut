@@ -21,7 +21,7 @@ class ViewModel: ObservableObject {
     @Published var customerList = [Customer]()
     @Published var userList = [User]()
     @Published var savedMachines = [String]()
-  
+
     init(){
         getAllCustomers()
         getAllUsers()

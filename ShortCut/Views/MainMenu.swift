@@ -28,6 +28,11 @@ struct MainMenu: View {
                     .popover(isPresented: $isShowingWelcomePopover, content: {
                         WelcomeView(firstName: model.currentUser.firstName)
                         })
+            QRCodeGenerator()
+                .tabItem{
+                    Image(systemName: "qrcode")
+                }
+                
             /*
             NavigationView{
                 CallClient()
@@ -73,8 +78,7 @@ struct MainMenu: View {
             Button("Abbrechen",role: .cancel){}
         }
         .tint(Color.white)
-        .navigationTitle("")
-        .navigationBarHidden(true)
+        
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {

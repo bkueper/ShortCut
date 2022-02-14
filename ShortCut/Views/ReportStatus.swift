@@ -20,70 +20,70 @@ struct ReportStatus: View {
     var body: some View {
         ZStack(alignment: .center){
             LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 0.2398733385, green: 0, blue: 0.7439433396, alpha: 1)), Color(#colorLiteral(red: 0.1026695753, green: 0, blue: 0.3184194925, alpha: 1))]), startPoint: .topLeading,endPoint: .bottom).ignoresSafeArea()
-            
-            VStack(alignment: .leading){
-                List {
-                    if(machineStateViewModel.currentMachineStates.count > 0){
-                        ForEach((0..<machineStateViewModel.currentMachineStates.count), id: \.self) {machine in
-                            HStack{
-                                StatusListElement(machineState: machineStateViewModel.currentMachineStates[machine]).padding()
+                    VStack(alignment: .leading){
+                        List {
+                            if(machineStateViewModel.currentMachineStates.count > 0){
+                                ForEach((0..<machineStateViewModel.currentMachineStates.count), id: \.self) {machine in
+                                    HStack{
+                                        StatusListElement(machineState: machineStateViewModel.currentMachineStates[machine]).padding()
+                                        }
+                                    }
                                 }
-                            }
+                        }.onAppear {
+                            self.machineStateViewModel.getAllMachineStatesByMachineID(machineID: model.currentMachine.id)
                         }
-                }.onAppear {
-                    self.machineStateViewModel.getAllMachineStatesByMachineID(machineID: model.currentMachine.id)
-                }
-                
-                Section(header: Text("Bauzustand").foregroundColor(Color.white), footer: Text("Wählen Sie einen der Bauzustände aus. Wählen Sie benutzdefiniert aus um einen eigenen Bauzustand zu beschreiben.").foregroundColor(Color.white)){
-                Picker("Wählen Sie einen Bauzustand", selection: $selectedState) {
-                                ForEach(states, id: \.self) {
-                                    Text($0)
-                                }
-                    }.padding()
-                        .background(Color.white)
-                        .cornerRadius(8)
-                        .shadow(color: Color.black, radius: 3, x: 5, y: 2)
-                }
-                
-                    
-                if(selectedState == "Benutzerdefiniert"){
-                    TextField("Bauzustand beschreiben", text: $customStateText)
-                        .padding()
-                        .background()
-                        .cornerRadius(8)
-                        .shadow(color: Color.black, radius: 3, x: 5, y: 2)
-                        
-                }
-                    HStack{
                         Spacer()
-                        Button{
-                            showConfirmationDialog = true
-                        }label: {
-                            Text("Bauzustand hinzufügen")
-                                .foregroundColor(Color.white)
+                        Section(header: Text("Bauzustand").foregroundColor(Color.white), footer: Text("Wählen Sie einen der Bauzustände aus. Wählen Sie benutzdefiniert aus um einen eigenen Bauzustand zu beschreiben.").foregroundColor(Color.white)){
+                            Picker("Wählen Sie einen Bauzustand", selection: $selectedState) {
+                                            ForEach(states, id: \.self) {
+                                                Text($0)
+                                            }
+                            }.pickerStyle(WheelPickerStyle())
+                                    .background(Color.white)
+                                    .cornerRadius(8)
+                                    .shadow(color: Color.black, radius: 3, x: 5, y: 2)
                         }
-                        .padding()
-                            .background(Color.blue)
-                            .cornerRadius(8)
-                            .shadow(color: Color.black, radius: 3, x: 5, y: 2)
+                        
+                            
+                        if(selectedState == "Benutzerdefiniert"){
+                            TextField("Bauzustand beschreiben", text: $customStateText)
+                                .padding()
+                                .background()
+                                .cornerRadius(8)
+                                .shadow(color: Color.black, radius: 3, x: 5, y: 2)
+                                
+                        }
+                            HStack{
+                                Spacer()
+                                Button{
+                                    showConfirmationDialog = true
+                                }label: {
+                                    Text("Bauzustand hinzufügen")
+                                        .foregroundColor(Color.white)
+                                }
+                                .padding()
+                                    .background(Color.blue)
+                                    .cornerRadius(8)
+                                    .shadow(color: Color.black, radius: 3, x: 5, y: 2)
 
+                            }
+                        
+                    }.confirmationDialog("Wollen Sie den Bauzustand \(selectedState) hinzufügen?", isPresented: $showConfirmationDialog,titleVisibility: .visible) {
+                        Button("Hinzufügen",role: .destructive) {
+                            if(selectedState != "Benutzerdefiniert"){
+                                machineStateViewModel.addMachineState(description: selectedState, creatorUID: model.currentUser.relatedUID, machineID: model.currentMachine.id, creationDate: Timestamp.init())
+                            }else{
+                                machineStateViewModel.addMachineState(description: customStateText, creatorUID: model.currentUser.relatedUID, machineID: model.currentMachine.id, creationDate: Timestamp.init())
+                            }
+                                selectedState = "Benutzerdefiniert"
+                                customStateText = ""
+                                print("Successfully added MachineState")
+                        }
+                        Button("Abbrechen",role: .cancel){}
                     }
                 
-            }.confirmationDialog("Wollen Sie den Bauzustand \(selectedState) hinzufügen?", isPresented: $showConfirmationDialog,titleVisibility: .visible) {
-                Button("Hinzufügen",role: .destructive) {
-                    if(selectedState != "Benutzerdefiniert"){
-                        machineStateViewModel.addMachineState(description: selectedState, creatorUID: model.currentUser.relatedUID, machineID: model.currentMachine.id, creationDate: Timestamp.init())
-                    }else{
-                        machineStateViewModel.addMachineState(description: customStateText, creatorUID: model.currentUser.relatedUID, machineID: model.currentMachine.id, creationDate: Timestamp.init())
-                    }
-                        selectedState = "Benutzerdefiniert"
-                        customStateText = ""
-                        print("Successfully added MachineState")
-                }
-                Button("Abbrechen",role: .cancel){}
             }
-        }
-        
+    
     }
 }
 struct StatusListElement: View{

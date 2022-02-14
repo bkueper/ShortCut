@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import UIKit
+import MessageUI
 
 struct MachineView: View{
     @EnvironmentObject var model: ViewModel
@@ -160,8 +162,11 @@ struct MachineMenu: View {
     var showMachineFile: Bool = false
     var showCircuitDiagram: Bool = false
     var showOperationManual: Bool = false
+    @State var showMailSheet: Bool = false
     @State var isPresentingWebsiteSheet: Bool = false
     @State var documentURL: String = ""
+    @State var result: Result<MFMailComposeResult, Error>? = nil
+    
     init(machine: Machine){
         UITableView.appearance().backgroundColor = .clear
         self.machine = machine
@@ -202,14 +207,32 @@ var body: some View{
                 NavigationLink(destination: SpareView()){
                     Text("Ersatzteile bestellen")
                     }
-                NavigationLink(destination: Text("Test")){
-                    Text("Krause Service anrufen")
+                Button{
+
+                    if let url = URL(string: "tel://\(model.getCustomerById(id: model.currentMachine.customerId).phoneNumber)") {
+                         UIApplication.shared.open(url)
+                     }
+                } label: {
+                    HStack{
+                        Text("Kunden anrufen")
+                        Image(systemName: "phone.circle.fill")
+        
+                            .foregroundColor(.green)
                     }
-                NavigationLink(destination: Text("Test")){
+                }
+                Button{
+                    showMailSheet = true
+                }label: {
                     Text("Krause Service E- Mail")
-                    }
-                NavigationLink(destination: Text("Test")){
+                }.sheet(isPresented: $showMailSheet){
+                    MailView(result: self.$result, Subject: "Service Anfrage", MsgBody: "Hallo, ich hätte eine Frage:",RecievingEMailAdress: model.getCustomerById(id: model.currentMachine.customerId).email)
+                }
+                Button{
+                    showMailSheet = true
+                }label: {
                     Text("Krause Ersatzteile E- Mail")
+                }.sheet(isPresented: $showMailSheet){
+                    MailView(result: self.$result, Subject: "Erstzteilbestellung", MsgBody: "Hallo, ich hätte eine Frage:",RecievingEMailAdress: model.getCustomerById(id: model.currentMachine.customerId).email)
                     }
                 }
             Section(header: Text("Bauzustand").foregroundColor(Color.white), footer: Text("Die abgehakten Bauzustände sind bereits erreicht. Wenn Sie einen neuen Bauzustand erreicht haben markieren Sie den Bauzustand als erledigt.").foregroundColor(Color.white)){

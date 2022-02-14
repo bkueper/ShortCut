@@ -20,6 +20,7 @@ struct MachineInfo: View {
    
     
     var scannerSheet: some View{
+        ZStack(alignment: .top){
         CodeScannerView(
             codeTypes: [.qr],
             completion: {result in
@@ -28,11 +29,32 @@ struct MachineInfo: View {
                 self.scannedCode = code.string
                 self.isPresentingScanner = false
                 self.isPresentingMachineViewLink = true
-                self.representedText = model.getMachineById(id: scannedCode).name
                 model.currentMachine = model.getMachineById(id: scannedCode)
+                if model.currentMachine.name != "Default"{
+                    self.representedText = model.getMachineById(id: scannedCode).name
+                    }
+                
+
                 
             }
         })
+            #if targetEnvironment(simulator)
+            
+            #else
+            ZStack {
+                Color.black.opacity(0.6).ignoresSafeArea()
+                VStack{// destination
+                Rectangle().frame(width: 300, height: 300)
+                        .cornerRadius(30)
+                        .blendMode(.destinationOut)
+                
+                    Text("Scannen Sie den QR- Code an der Maschine ein.").font(.body).foregroundColor(Color.white)
+                }.offset(y: -120)
+            }
+            .compositingGroup()
+            Text("QR-Code-Scanner").font(.largeTitle).foregroundColor(Color.white).fontWeight(.semibold)
+            #endif
+        }
     }
     init(){
     }
@@ -45,16 +67,19 @@ struct MachineInfo: View {
                     .font(.title)
                     .fontWeight(.regular)
                     .foregroundColor(Color.white)
-                if isPresentingMachineViewLink {
+                if isPresentingMachineViewLink && model.currentMachine.name != "Default" {
                     let presentedMachine: Machine = model.getMachineById(id: scannedCode)
                     NavigationLink(destination: MachineMenu(machine: presentedMachine)){
-                        Text("Dokumente anzeigen")
+                        Text("Maschineninformationen")
+                            .font(.title2)
                             .fontWeight(.semibold)
                             .foregroundColor(.white)
                             .padding()
                     }
-                    .background(Color(hue: 0.59, saturation: 1.0, brightness: 0.692))
-                    .cornerRadius(12)
+                    .padding()
+                    .background(Color.blue)
+                    .cornerRadius(8)
+                    .shadow(color: Color.black, radius: 3, x: 5, y: 2)
                     Spacer()
                         .frame(height: 30)
                 }
@@ -63,10 +88,15 @@ struct MachineInfo: View {
                     
                     self.isPresentingScanner = true
                 } label: {
-                    Image(systemName: "qrcode.viewfinder")
-                        .resizable()
-                        .frame(width: 250, height: 250)
-                        .padding(10)
+                    VStack{
+                        Image(systemName: "qrcode.viewfinder")
+                            .resizable()
+                            .frame(width: 250, height: 250)
+                            .padding(10)
+                            Text("Scan Starten")
+                                .font(.title)
+                                .foregroundColor(Color.white)
+                    }
                 }
                 .sheet(isPresented: $isPresentingScanner){
                     self.scannerSheet
