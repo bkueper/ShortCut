@@ -8,10 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		99115BED27B6964000984CD6 /* QRCodeGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99115BEC27B6964000984CD6 /* QRCodeGenerator.swift */; };
+		99324ECC27BD221100A352F3 /* Machine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99324ECB27BD221100A352F3 /* Machine.swift */; };
 		994FDB862796BECB0087D68C /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 994FDB852796BECB0087D68C /* CodeScanner */; };
 		994FDB8A2796FCE70087D68C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 994FDB892796FCE70087D68C /* GoogleService-Info.plist */; };
 		997743562799647200A2FD73 /* MachineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997743552799647200A2FD73 /* MachineView.swift */; };
-		997CD112279804CA009EE598 /* Machine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997CD111279804CA009EE598 /* Machine.swift */; };
 		997CD1152798057A009EE598 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997CD1142798057A009EE598 /* ViewModel.swift */; };
 		997CD11827980D8F009EE598 /* FirebaseDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997CD11727980D8F009EE598 /* FirebaseDemo.swift */; };
 		997CD11A2798255D009EE598 /* CustomerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997CD1192798255D009EE598 /* CustomerView.swift */; };
@@ -27,6 +27,8 @@
 		998A39CB27B548CC0072EE93 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 998A39CA27B548CC0072EE93 /* FirebaseFirestore */; };
 		998A39CD27B548CC0072EE93 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 998A39CC27B548CC0072EE93 /* FirebaseStorage */; };
 		998A39D227B55C3B0072EE93 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 998A39D127B55C3B0072EE93 /* SDWebImageSwiftUI */; };
+		998CD4AE27BAAC0500B4AB1B /* SpareViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998CD4AD27BAAC0500B4AB1B /* SpareViewModel.swift */; };
+		998CD4B027BAAF2F00B4AB1B /* MachineSpare.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998CD4AF27BAAF2F00B4AB1B /* MachineSpare.swift */; };
 		99AB0B3327A439F0007E618E /* QRCodeScanningAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 99AB0B3227A439F0007E618E /* QRCodeScanningAnimation.json */; };
 		99CAFB8727A0340900ACAB0A /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 99CAFB8627A0340900ACAB0A /* Lottie */; };
 		99CAFB8A27A0348900ACAB0A /* QRCodeAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 99CAFB8927A0348900ACAB0A /* QRCodeAnimation.json */; };
@@ -45,9 +47,9 @@
 
 /* Begin PBXFileReference section */
 		99115BEC27B6964000984CD6 /* QRCodeGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeGenerator.swift; sourceTree = "<group>"; };
+		99324ECB27BD221100A352F3 /* Machine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Machine.swift; sourceTree = "<group>"; };
 		994FDB892796FCE70087D68C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		997743552799647200A2FD73 /* MachineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineView.swift; sourceTree = "<group>"; };
-		997CD111279804CA009EE598 /* Machine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Machine.swift; sourceTree = "<group>"; };
 		997CD1142798057A009EE598 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		997CD11727980D8F009EE598 /* FirebaseDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseDemo.swift; sourceTree = "<group>"; };
 		997CD1192798255D009EE598 /* CustomerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerView.swift; sourceTree = "<group>"; };
@@ -59,6 +61,8 @@
 		9986679B27A2BD9300AFE6B8 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		9988864427B4023700434054 /* MailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailView.swift; sourceTree = "<group>"; };
 		9988864627B410C800434054 /* Spare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spare.swift; sourceTree = "<group>"; };
+		998CD4AD27BAAC0500B4AB1B /* SpareViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpareViewModel.swift; sourceTree = "<group>"; };
+		998CD4AF27BAAF2F00B4AB1B /* MachineSpare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineSpare.swift; sourceTree = "<group>"; };
 		99AB0B3227A439F0007E618E /* QRCodeScanningAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = QRCodeScanningAnimation.json; sourceTree = "<group>"; };
 		99CAFB8927A0348900ACAB0A /* QRCodeAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = QRCodeAnimation.json; sourceTree = "<group>"; };
 		99CAFB8B27A034FB00ACAB0A /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
@@ -95,11 +99,12 @@
 		997CD1102798048A009EE598 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				997CD111279804CA009EE598 /* Machine.swift */,
 				997CD11B27983215009EE598 /* Customer.swift */,
 				9986679B27A2BD9300AFE6B8 /* User.swift */,
 				9984B70427B27A9600CCE0EC /* MachineState.swift */,
 				9988864627B410C800434054 /* Spare.swift */,
+				998CD4AF27BAAF2F00B4AB1B /* MachineSpare.swift */,
+				99324ECB27BD221100A352F3 /* Machine.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -109,6 +114,7 @@
 			children = (
 				997CD1142798057A009EE598 /* ViewModel.swift */,
 				9984B70627B2ACBF00CCE0EC /* MachineStateViewModel.swift */,
+				998CD4AD27BAAC0500B4AB1B /* SpareViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -136,6 +142,13 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		998CD4B127BABC8900B4AB1B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		99CAFB8827A0347100ACAB0A /* Lottie */ = {
 			isa = PBXGroup;
 			children = (
@@ -150,6 +163,7 @@
 			children = (
 				B7809EAA2770BA7200D1FA1C /* ShortCut */,
 				B7809EA92770BA7200D1FA1C /* Products */,
+				998CD4B127BABC8900B4AB1B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -278,8 +292,8 @@
 				9984B70527B27A9600CCE0EC /* MachineState.swift in Sources */,
 				B7809EAE2770BA7200D1FA1C /* ContentView.swift in Sources */,
 				99115BED27B6964000984CD6 /* QRCodeGenerator.swift in Sources */,
-				997CD112279804CA009EE598 /* Machine.swift in Sources */,
 				997CD11827980D8F009EE598 /* FirebaseDemo.swift in Sources */,
+				99324ECC27BD221100A352F3 /* Machine.swift in Sources */,
 				B7F411DD277207E3008FC313 /* MachineInfo.swift in Sources */,
 				99CAFB8C27A034FB00ACAB0A /* LottieView.swift in Sources */,
 				997D37F927B162C2006DB7F3 /* SpareView.swift in Sources */,
@@ -291,7 +305,9 @@
 				B7F411DF2772139C008FC313 /* CallClient.swift in Sources */,
 				B7541A1227831C7B00B2A6E5 /* WebView.swift in Sources */,
 				9986679C27A2BD9300AFE6B8 /* User.swift in Sources */,
+				998CD4B027BAAF2F00B4AB1B /* MachineSpare.swift in Sources */,
 				997CD1152798057A009EE598 /* ViewModel.swift in Sources */,
+				998CD4AE27BAAC0500B4AB1B /* SpareViewModel.swift in Sources */,
 				B7F411E127721638008FC313 /* ReportStatus.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

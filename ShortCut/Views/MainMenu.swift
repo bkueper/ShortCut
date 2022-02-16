@@ -55,14 +55,14 @@ struct MainMenu: View {
                 .tabItem{
                     Image(systemName: "archivebox.circle.fill")
                 }*/
-            if model.currentUser.role == "Admin" {
+           /* if model.currentUser.role == "Admin" {
                 
                     FirebaseDemo()
                         
                     .tabItem{
                         Image(systemName: "flame")
                     }
-            }
+            }*/
         }.confirmationDialog("Wollen Sie sich wirklich ausloggen?", isPresented: $showConfirmationDialog,titleVisibility: .visible) {
             Button("Ausloggen",role: .destructive) {
                 do{

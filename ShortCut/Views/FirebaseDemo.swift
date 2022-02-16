@@ -4,7 +4,7 @@
 //
 //  Created by Bjarne Küper on 19.01.22.
 //
-
+/*
 import SwiftUI
 import Firebase
 struct FirebaseDemo: View {
@@ -74,6 +74,6 @@ struct FirebaseDemo: View {
     
 }
 
-
+*/
 
 

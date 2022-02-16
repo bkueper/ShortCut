@@ -13,7 +13,7 @@ class MachineStateViewModel: ObservableObject {
     
     func addMachineState(description: String, creatorUID: String, machineID: String, creationDate: Timestamp){
         let db = Firestore.firestore()
-        db.collection("States").addDocument(data: ["Description": description, "CreatorUID": creatorUID, "MachineID": machineID, "CreationDate": creationDate]){
+        db.collection("Zustände").addDocument(data: ["Beschreibung": description, "ErstellerUID": creatorUID, "MaschinenID": machineID, "Erstellungsdatum": creationDate]){
             error in
             if error == nil{
                 self.getAllMachineStatesByMachineID(machineID: machineID)
@@ -26,12 +26,12 @@ class MachineStateViewModel: ObservableObject {
     }
     func getAllMachineStatesByMachineID(machineID: String){
         let db = Firestore.firestore()
-        db.collection("States").whereField("MachineID", isEqualTo: machineID).getDocuments { (snapshot, err) in
+        db.collection("Zustände").whereField("MaschinenID", isEqualTo: machineID).getDocuments { (snapshot, err) in
             if err == nil {
                 if let snapshot = snapshot {
                         DispatchQueue.main.async {
                             self.currentMachineStates = snapshot.documents.map { document in
-                                return MachineState(id: document.documentID, description: document["Description"]as? String ?? "", creatorUID: document["CreatorUID"] as? String ?? "", machineID: document["MachineID"] as? String ?? "", creationDate: document["CreationDate"] as! Timestamp)
+                                return MachineState(id: document.documentID, description: document["Beschreibung"]as? String ?? "", creatorUID: document["ErstellerUID"] as? String ?? "", machineID: document["MaschinenID"] as? String ?? "", creationDate: document["Erstellungsdatum"] as! Timestamp)
                             }
                             self.currentMachineStates.sort {$0.creationDate.dateValue() < $1.creationDate.dateValue()}
                         }

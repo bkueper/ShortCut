@@ -8,7 +8,7 @@
 import SwiftUI
 import UIKit
 import MessageUI
-
+/*
 struct MachineView: View{
     @EnvironmentObject var model: ViewModel
     var machine: Machine
@@ -156,6 +156,7 @@ struct MachineList: View {
         }
     }
 }
+*/
 struct MachineMenu: View {
     @EnvironmentObject var model: ViewModel
     var machine: Machine
@@ -170,6 +171,7 @@ struct MachineMenu: View {
     init(machine: Machine){
         UITableView.appearance().backgroundColor = .clear
         self.machine = machine
+        /*
         if (machine.machineFileURL != ""){
             self.showMachineFile = true
         }
@@ -179,6 +181,7 @@ struct MachineMenu: View {
         if (machine.operationManualURL != ""){
             self.showOperationManual = true
         }
+         */
     }
 var body: some View{
     
@@ -188,17 +191,17 @@ var body: some View{
             //ROLLE: alle Hersteller
             Section(header: Text("Maschinendateien").foregroundColor(Color.white), footer: Text("Einen der Menüpunkte anklicken um jeweilige Datei anzeigen zu lassen").foregroundColor(Color.white)){
                     if showMachineFile{
-                        NavigationLink(destination: SwiftUIWebView(url: URL(string: machine.machineFileURL))){
+                        NavigationLink(destination: SwiftUIWebView(url: URL(string: "https://www.krause.de"))){
                             Text("Maschinenakte")
                         }
                     }
                     if showCircuitDiagram{
-                        NavigationLink(destination: SwiftUIWebView(url: URL(string: machine.circuitDiagramURL))){
+                        NavigationLink(destination: SwiftUIWebView(url: URL(string: "https://www.krause.de"))){
                             Text("Schaltplan")
                         }
                     }
                     if showOperationManual{
-                        NavigationLink(destination: SwiftUIWebView(url: URL(string: machine.operationManualURL))){
+                        NavigationLink(destination: SwiftUIWebView(url: URL(string: "https://www.krause.de"))){
                             Text("Bedienungsanleitung")
                         }
                     }
@@ -209,7 +212,7 @@ var body: some View{
                     }
                 Button{
 
-                    if let url = URL(string: "tel://\(model.getCustomerById(id: model.currentMachine.customerId).phoneNumber)") {
+                    if let url = URL(string: "tel://015234227884") {
                          UIApplication.shared.open(url)
                      }
                 } label: {
@@ -225,14 +228,14 @@ var body: some View{
                 }label: {
                     Text("Krause Service E- Mail")
                 }.sheet(isPresented: $showMailSheet){
-                    MailView(result: self.$result, Subject: "Service Anfrage", MsgBody: "Hallo, ich hätte eine Frage:",RecievingEMailAdress: model.getCustomerById(id: model.currentMachine.customerId).email)
+                    MailView(result: self.$result, Subject: "Service Anfrage", MsgBody: "Hallo, ich hätte eine Frage:",RecievingEMailAdress: "service@krause.de")
                 }
                 Button{
                     showMailSheet = true
                 }label: {
                     Text("Krause Ersatzteile E- Mail")
                 }.sheet(isPresented: $showMailSheet){
-                    MailView(result: self.$result, Subject: "Erstzteilbestellung", MsgBody: "Hallo, ich hätte eine Frage:",RecievingEMailAdress: model.getCustomerById(id: model.currentMachine.customerId).email)
+                    MailView(result: self.$result, Subject: "Erstzteilbestellung", MsgBody: "Hallo, ich hätte eine Frage:",RecievingEMailAdress: "ersatzteile@krause.de")
                     }
                 }
             Section(header: Text("Bauzustand").foregroundColor(Color.white), footer: Text("Die abgehakten Bauzustände sind bereits erreicht. Wenn Sie einen neuen Bauzustand erreicht haben markieren Sie den Bauzustand als erledigt.").foregroundColor(Color.white)){

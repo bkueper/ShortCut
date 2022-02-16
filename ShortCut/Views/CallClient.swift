@@ -7,7 +7,7 @@
 
 import SwiftUI
 import CodeScanner
-
+/*
 struct CallClient: View {
     //@ObservedObject var model = ViewModel()
     @EnvironmentObject var model: ViewModel
@@ -94,3 +94,5 @@ struct CallClient_Previews: PreviewProvider {
         CallClient()
     }
 }
+
+*/

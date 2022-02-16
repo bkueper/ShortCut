@@ -4,7 +4,7 @@
 //
 //  Created by Bjane Küper on 22.12.21.
 //
-
+/*
 import SwiftUI
 import Firebase
 struct DocumentArchive: View {
@@ -38,3 +38,5 @@ struct DocumentArchive_Previews: PreviewProvider {
         DocumentArchive()
     }
 }
+
+*/

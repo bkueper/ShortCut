@@ -21,10 +21,12 @@ class SpareInformations: ObservableObject {
 struct SpareView: View {
     @EnvironmentObject var model: ViewModel
     @StateObject var spareInformations = SpareInformations()
+    @ObservedObject private var spareViewModel = SpareViewModel()
+    @ObservedObject private var machineStateViewModel = MachineStateViewModel()
     @State var result: Result<MFMailComposeResult, Error>? = nil
     @State var showMailSheet = false
-    @State var spareList: [Spare] = [Spare(id: "", itemNumber: "23", description: "Kabel", category: "Kabel", imageName: "Kabel.jpg"),Spare(id: "", itemNumber: "24", description: "Schanier", category: "Schaniere", imageName: "Schanier.jpg" ),
-                                     Spare(id: "", itemNumber: "25", description: "Schraube", category: "Schrauben", imageName: "Schraube.jpg" )]
+//    @State var spareList: [Spare] = [Spare(id: "", itemNumber: "23", description: "Kabel", category: "Kabel", imageName: "Kabel.jpg"),Spare(id: "", itemNumber: "24", description: "Schanier", category: "Schaniere", imageName: "Schanier.jpg" ),
+//                                     Spare(id: "", itemNumber: "25", description: "Schraube", category: "Schrauben", imageName: "Schraube.jpg" )]
     @State var singleSpareList: [SingleSpare] = [SingleSpare]()
     
     var body: some View {
@@ -38,16 +40,26 @@ struct SpareView: View {
                     .padding(EdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 0))
                 Form {
                     Section(header: Text("Ersatzteilliste").foregroundColor(Color.white), footer: Text("Fügen Sie alle gewünschten Ersatzteile hinzu.").foregroundColor(Color.white)){
-                        ForEach((0..<spareList.count), id: \.self){spare in
-                            SingleSpare(name: spareList[spare].description,spareNumber: spare,imageName: spareList[spare].imageName)
+                        ForEach((0..<spareViewModel.spareList.count), id: \.self){spare in
+                            SingleSpare(name: spareViewModel.spareList[spare].description1GER, spareNumber: spare, imageName: spareViewModel.spareList[spare].imageName)
+                            
                         }
                         }
+                }
+                .onAppear {
+                    print(self.model.machineSpareList.count)
+                    for index in 0..<(self.model.machineSpareList.count){
+                        self.spareViewModel.getSingleSpareByArticleNumber(articleNumber: self.model.machineSpareList[index].arcticleNumber)
+                    }
+                    
+                }
+                .onDisappear {
+                    self.spareViewModel.spareList.removeAll()
                 }
                 HStack{
                     Spacer()
                     Button{
                         showMailSheet = true
-                        print(createOrderText())
                     }label: {
                         Text("Bestellen")
                             .foregroundColor(Color.white)
@@ -63,7 +75,7 @@ struct SpareView: View {
             
             }
         .sheet(isPresented: $showMailSheet){
-            MailView(result: self.$result, Subject: "Ersatzteilbestellung", MsgBody: createOrderText(),RecievingEMailAdress: model.getCustomerById(id: model.currentMachine.customerId).email)
+            MailView(result: self.$result, Subject: "Ersatzteilbestellung", MsgBody: createOrderText(),RecievingEMailAdress: "ersatzteile@krause.de")
         }
         .environmentObject(spareInformations)
         .onAppear {
@@ -73,8 +85,8 @@ struct SpareView: View {
         }
     func createOrderText()->String{
         var orderText: String = "Hallo, \n wir benötigen folgende Ersatzteile: \n"
-        for index in 0...(spareList.count-1){
-            orderText += "\(spareInformations.spareValues[index])x \(spareList[index].description) \n"
+        for index in 0..<(spareViewModel.spareList.count){
+            orderText += "\(spareInformations.spareValues[index])x \(spareViewModel.spareList[index].description1GER) \n"
         }
         return orderText
     }

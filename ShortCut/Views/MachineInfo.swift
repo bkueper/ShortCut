@@ -29,9 +29,10 @@ struct MachineInfo: View {
                 self.scannedCode = code.string
                 self.isPresentingScanner = false
                 self.isPresentingMachineViewLink = true
-                model.currentMachine = model.getMachineById(id: scannedCode)
-                if model.currentMachine.name != "Default"{
-                    self.representedText = model.getMachineById(id: scannedCode).name
+                model.setCurrentMachineByID(id: scannedCode)
+                model.getAllMachineSparesByMachineID(machineID: scannedCode)
+                if model.currentMachine.id != ""{
+                    self.representedText = model.currentMachine.id
                     }
                 
 
@@ -67,8 +68,8 @@ struct MachineInfo: View {
                     .font(.title)
                     .fontWeight(.regular)
                     .foregroundColor(Color.white)
-                if isPresentingMachineViewLink && model.currentMachine.name != "Default" {
-                    let presentedMachine: Machine = model.getMachineById(id: scannedCode)
+                if isPresentingMachineViewLink && model.currentMachine.id != "" {
+                    let presentedMachine: Machine = model.currentMachine
                     NavigationLink(destination: MachineMenu(machine: presentedMachine)){
                         Text("Maschineninformationen")
                             .font(.title2)
