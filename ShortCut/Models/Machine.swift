@@ -6,9 +6,9 @@
 //
 
 import Foundation
-
-struct Machine: Identifiable{
-    var id: String
+import FirebaseFirestoreSwift
+struct Machine: Identifiable, Codable{
+    @DocumentID var id: String? 
     var orderDate: String
     var orderNumber: String
     var spareServiceEmail: String
@@ -23,4 +23,25 @@ struct Machine: Identifiable{
     var serviceHotline: String
     var type: String
     var customerID: String
+    var machineNumber: String
+    
+    enum CodingKeys: String, CodingKey{
+        case id
+        case orderDate = "Bestelldatum"
+        case orderNumber = "Bestellnummer"
+        case spareServiceEmail = "ErsatzteilEmail"
+        case spareServicePhone = "ErsatzteilTelefon"
+        case warrantyBegin = "Garantiebeginn"
+        case warrantyEnd = "Garantieende"
+        case installationEnd = "Installationsende"
+        case krauseServiceEmail = "KrauseServiceEmail"
+        case deliveryDate = "Liefertermin"
+        case serialNumber = "Seriennummer"
+        case serviceEmail = "ServiceEmail"
+        case serviceHotline = "ServiceHotline"
+        case type = "Typ"
+        case customerID = "KundenID"
+        case machineNumber = "Maschinennummer"
+        
+    }
 }

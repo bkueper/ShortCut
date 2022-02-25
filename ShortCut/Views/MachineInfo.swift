@@ -31,9 +31,8 @@ struct MachineInfo: View {
                 self.isPresentingMachineViewLink = true
                 model.setCurrentMachineByID(id: scannedCode)
                 model.getAllMachineSparesByMachineID(machineID: scannedCode)
-                if model.currentMachine.id != ""{
-                    self.representedText = model.currentMachine.id
-                    }
+                
+                    
                 
 
                 
@@ -49,7 +48,9 @@ struct MachineInfo: View {
                         .cornerRadius(30)
                         .blendMode(.destinationOut)
                 
-                    Text("Scannen Sie den QR- Code an der Maschine ein.").font(.body).foregroundColor(Color.white)
+                    Text("Scannen Sie den QR- Code an der Maschine ein.")
+                        .font(.body)
+                        .foregroundColor(Color.white)
                 }.offset(y: -120)
             }
             .compositingGroup()
@@ -63,14 +64,20 @@ struct MachineInfo: View {
         ZStack{
             LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 0.2398733385, green: 0, blue: 0.7439433396, alpha: 1)), Color(#colorLiteral(red: 0.1026695753, green: 0, blue: 0.3184194925, alpha: 1))]), startPoint: .topLeading,endPoint: .bottom).ignoresSafeArea()
             VStack{
-                    
-                Text(representedText)
-                    .font(.title)
-                    .fontWeight(.regular)
-                    .foregroundColor(Color.white)
+                if model.currentMachine.id == ""{
+                    Text("Scanne einen QR- Code.")
+                        .font(.title)
+                        .fontWeight(.regular)
+                        .foregroundColor(Color.white)
+                }else{
+                    Text(model.currentMachine.id ?? "")
+                        .font(.title)
+                        .fontWeight(.regular)
+                        .foregroundColor(Color.white)
+                }
                 if isPresentingMachineViewLink && model.currentMachine.id != "" {
-                    let presentedMachine: Machine = model.currentMachine
-                    NavigationLink(destination: MachineMenu(machine: presentedMachine)){
+                    //let presentedMachine: Machine = model.currentMachine
+                    NavigationLink(destination: MachineMenu()){
                         Text("Maschineninformationen")
                             .font(.title2)
                             .fontWeight(.semibold)
@@ -86,7 +93,6 @@ struct MachineInfo: View {
                 }
                 
                 Button{
-                    
                     self.isPresentingScanner = true
                 } label: {
                     VStack{

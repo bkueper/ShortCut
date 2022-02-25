@@ -14,6 +14,7 @@ struct ReportStatus: View {
     @ObservedObject private var machineStateViewModel = MachineStateViewModel()
     @State var showConfirmationDialog: Bool = false
     @State private var customStateText: String = ""
+    @State private var showAlert = false
     var states = ["Benutzerdefiniert", "Maschine angelegt", "Montagebeginn", "Elektrik ok","Montageende","Inbetriebname ok","Verpackt","Versendet","Angeliefert","Installiert","Wartung planen","Wartung durchgeführt","Störung gemeldet","Störung behoben"]
     @State private var selectedState = "Benutzerdefiniert"
     var machineStates = [MachineState]()
@@ -26,11 +27,24 @@ struct ReportStatus: View {
                                 ForEach((0..<machineStateViewModel.currentMachineStates.count), id: \.self) {machine in
                                     HStack{
                                         StatusListElement(machineState: machineStateViewModel.currentMachineStates[machine]).padding()
+                                    }.swipeActions {
+                                        Button(role: .destructive){
+                                            if(model.currentUser.role == "Admin"){
+                                                machineStateViewModel.deletemachineState(machineStateID: machineStateViewModel.currentMachineStates[machine].id, machineID: model.currentMachine.id ?? "")
+                                                print("deleted")
+                                            }else{
+                                                showAlert = true
+                                            }
+                                        }label: {
+                                            Label("Entfernen",systemImage: "trash.circle.fill")
                                         }
                                     }
                                 }
+                                }
                         }.onAppear {
-                            self.machineStateViewModel.getAllMachineStatesByMachineID(machineID: model.currentMachine.id)
+                            self.machineStateViewModel.getAllMachineStatesByMachineID(machineID: model.currentMachine.id ?? "")
+                        }.alert("Keine Berechtigung Zustände zu löschen", isPresented: $showAlert) {
+                            Button("OK", role: .cancel){}
                         }
                         Spacer()
                         Section(header: Text("Bauzustand").foregroundColor(Color.white), footer: Text("Wählen Sie einen der Bauzustände aus. Wählen Sie benutzdefiniert aus um einen eigenen Bauzustand zu beschreiben.").foregroundColor(Color.white)){
@@ -71,9 +85,9 @@ struct ReportStatus: View {
                     }.confirmationDialog("Wollen Sie den Bauzustand \(selectedState) hinzufügen?", isPresented: $showConfirmationDialog,titleVisibility: .visible) {
                         Button("Hinzufügen",role: .destructive) {
                             if(selectedState != "Benutzerdefiniert"){
-                                machineStateViewModel.addMachineState(description: selectedState, creatorUID: model.currentUser.relatedUID, machineID: model.currentMachine.id, creationDate: Timestamp.init())
+                                machineStateViewModel.addMachineState(description: selectedState, creatorName: "\(model.currentUser.firstName) \(model.currentUser.lastName)", machineID: model.currentMachine.id ?? "", creationDate: Timestamp.init())
                             }else{
-                                machineStateViewModel.addMachineState(description: customStateText, creatorUID: model.currentUser.relatedUID, machineID: model.currentMachine.id, creationDate: Timestamp.init())
+                                machineStateViewModel.addMachineState(description: customStateText, creatorName: "\(model.currentUser.firstName) \(model.currentUser.lastName)", machineID: model.currentMachine.id ?? "", creationDate: Timestamp.init())
                             }
                                 selectedState = "Benutzerdefiniert"
                                 customStateText = ""
@@ -85,6 +99,7 @@ struct ReportStatus: View {
             }
     
     }
+    
 }
 struct StatusListElement: View{
     @EnvironmentObject var model: ViewModel
@@ -98,7 +113,7 @@ struct StatusListElement: View{
                 Text(machineState.description)
                     .font(.body)
                     .fontWeight(.semibold)
-                Text("Von \(model.getUserByRelatedUID(UID: machineState.creatorUID).firstName) \(model.getUserByRelatedUID(UID: machineState.creatorUID).lastName)")
+                Text("Von \(machineState.creatorName)")
                     .font(.caption)
             }
             Spacer()

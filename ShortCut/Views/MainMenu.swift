@@ -32,7 +32,10 @@ struct MainMenu: View {
                 .tabItem{
                     Image(systemName: "qrcode")
                 }
-                
+            DocumentArchive()
+                .tabItem {
+                    Image(systemName: "archivebox.circle.fill")
+                }
             /*
             NavigationView{
                 CallClient()
@@ -41,10 +44,7 @@ struct MainMenu: View {
                     .tabItem{
                         Image(systemName: "phone.circle.fill")
                     }
-            NavigationView{
-                ReportStatus()
-                    .navigationTitle("Bauzustand melden")
-            }
+            
                 .tabItem{
                     Image(systemName: "envelope.fill")
                 }
@@ -63,10 +63,13 @@ struct MainMenu: View {
                         Image(systemName: "flame")
                     }
             }*/
-        }.confirmationDialog("Wollen Sie sich wirklich ausloggen?", isPresented: $showConfirmationDialog,titleVisibility: .visible) {
+        }
+        .confirmationDialog("Wollen Sie sich wirklich ausloggen?", isPresented: $showConfirmationDialog,titleVisibility: .visible) {
             Button("Ausloggen",role: .destructive) {
                 do{
-                    model.savedMachines.removeAll()
+                    model.currentMachine = Machine(id: "", orderDate: "", orderNumber: "", spareServiceEmail: "", spareServicePhone: "", warrantyBegin: "", warrantyEnd: "", installationEnd: "", krauseServiceEmail: "", deliveryDate: "", serialNumber: "", serviceEmail: "", serviceHotline: "", type: "", customerID: "", machineNumber: "")
+                    model.currentUser = User(id: "", firstName: "", lastName: "", email: "", role: "", savedMachines: [""])
+                    model.savedMachinesIDs.removeAll()
                     let currentUser = Auth.auth().currentUser?.uid
                     try Auth.auth().signOut()
                     print("Successfully logged out the User: \(String(describing: currentUser))")

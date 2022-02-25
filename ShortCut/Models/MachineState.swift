@@ -11,7 +11,7 @@ import Firebase
 struct MachineState: Identifiable{
     var id: String
     var description: String
-    var creatorUID: String
+    var creatorName: String
     var machineID: String
     var creationDate: Timestamp
 }

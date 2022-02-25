@@ -4,11 +4,9 @@
 //
 //  Created by Bjarne Küper on 19.01.22.
 //
-
 import Foundation
 import Firebase
-import CloudKit
-
+import FirebaseFirestoreSwift
 class ViewModel: ObservableObject {
     @Published var customerId: String = ""
     @Published var name: String = "Kunde hinzufügen"
@@ -18,59 +16,55 @@ class ViewModel: ObservableObject {
     
     @Published var machineSpareList = [MachineSpare]()
     
-    @Published var currentUser: User = User(id: "", relatedUID: "", firstName: "", lastName: "", email: "", role: "",savedMachines: [""])
-    @Published var currentMachine: Machine = Machine(id: "", orderDate: "", orderNumber: "", spareServiceEmail: "", spareServicePhone: "", warrantyBegin: "", warrantyEnd: "", installationEnd: "", krauseServiceEmail: "", deliveryDate: "", serialNumber: "", serviceEmail: "", serviceHotline: "", type: "", customerID: "")
-    @Published var machineList = [Machine]()
+    @Published var currentUser: User = User(id: "",  firstName: "", lastName: "", email: "", role: "",savedMachines: [""])
+    @Published var currentMachine: Machine = Machine(id: "", orderDate: "", orderNumber: "", spareServiceEmail: "", spareServicePhone: "", warrantyBegin: "", warrantyEnd: "", installationEnd: "", krauseServiceEmail: "", deliveryDate: "", serialNumber: "", serviceEmail: "", serviceHotline: "", type: "", customerID: "", machineNumber: "")
+    
+    @Published var savedMachinesList = [Machine]()
     @Published var customerList = [Customer]()
     @Published var userList = [User]()
-    @Published var savedMachines = [String]()
-
+    var savedMachinesIDs = [String]()
+    @Published var machineStates = [MachineState]()
     init(){
-        getAllUsers()
-        
-    }
-    
-    func addMachineState(description: String, creatorUID: String, machineID: String, creationDate: Timestamp){
-        let db = Firestore.firestore()
-        db.collection("States").addDocument(data: ["Description": description, "CreatorUID": creatorUID, "MachineID": machineID, "CreationDate": creationDate]){
-            error in
-            if error == nil{
-                self.getAllSavedMachinesOfUser(UID: self.currentUser.relatedUID)
-                print("Added new MachineState!")
-            }else{
-                print("Failed to create State!")
-            }
-            
-        }
     }
     
     
     func addUser(relatedUID: String, firstName: String, lastName: String, email: String, role: String){
-        let db = Firestore.firestore()
-        db.collection("Users").addDocument(data: ["RelatedUID": relatedUID, "FirstName": firstName, "LastName": lastName, "EMail": email,"Role": role, "SavedMachines": [String]()]){ error in
-            if error == nil {
-                self.getAllUsers()
-            }
-            else{
-                //Handle Errors
+            let db = Firestore.firestore()
+        db.collection("Users").document(relatedUID).setData(["Vorname": firstName, "Nachname": lastName, "EMail": email,"Rolle": role, "Gespeicherte Maschinen": [String]()]){ error in
+                if error == nil {
+                    self.getAllUsers()
+                }
+                else{
+                    //Handle Errors
+                }
             }
         }
-    }
     
-    func addCustomer(name: String, address: String, email: String, phoneNumber: String){
+    
+    
+    func getAllMachineStates() {
         let db = Firestore.firestore()
-        db.collection("Customers").addDocument(data: ["Name":name, "Address":address, "Email":email, "Phonenumber":phoneNumber]){ error in
-            if error == nil {
-                //call getAllCustomers to update the UI
-                self.getAllCustomers()
+        db.collection("Zustände").getDocuments { snapshot, error in
+                if error == nil {
+                    if let snapshot = snapshot {
+                        DispatchQueue.main.async {
+                            self.machineStates = snapshot.documents.map { d in
+                                return MachineState(id: d.documentID,
+                                                    description: d["Beschreibung"] as? String ?? "",
+                                               creatorName: d["ErstellerName"] as? String ?? "",
+                                               machineID: d["MaschinenID"] as? String ?? "",
+                                               creationDate: d["Erstellungsdatum"] as? Timestamp ?? Timestamp() )
+                            }
+                        }
+                    }
+                    else{
+                        //handle Errors
+                    }
+                }
             }
-            else{
-                //Handle Errors
-            }
-                                                            
-        }
+        
+        
     }
-    
     func getAllUsers() {
         let db = Firestore.firestore()
         
@@ -78,19 +72,29 @@ class ViewModel: ObservableObject {
             if error == nil {
                 if let snapshot = snapshot {
                     DispatchQueue.main.async {
-                        self.userList = snapshot.documents.map { d in
-                            return User(id: d.documentID,
-                                           relatedUID: d["RelatedUID"] as? String ?? "",
-                                           firstName:  d["FirstName"] as? String ?? "",
-                                           lastName: d["LastName"] as? String ?? "",
-                                           email: d["EMail"] as? String ?? "",
-                                        role: d["Role"] as? String ?? "",
-                                        savedMachines: d["SavedMachines"] as? [String] ?? [""]  )
+                        self.userList = snapshot.documents.compactMap{ d -> User? in
+                            return try? (d.data(as: User.self))
                         }
                     }
                 }
                 else{
                     //handle Errors
+                }
+            }
+        }
+    }
+    func getAllSavedMachinesOfCurrentUser(){
+        let db = Firestore.firestore()
+        
+        for index in 0..<currentUser.savedMachines.count{
+            db.collection("Maschinen").document(currentUser.savedMachines[index]).getDocument { document,error in
+                if let document = document, document.exists{
+                    do{
+                        self.savedMachinesList.append(try document.data(as: Machine.self) ?? Machine(id: "", orderDate: "", orderNumber: "", spareServiceEmail: "", spareServicePhone: "", warrantyBegin: "", warrantyEnd: "", installationEnd: "", krauseServiceEmail: "", deliveryDate: "", serialNumber: "", serviceEmail: "", serviceHotline: "", type: "", customerID: "", machineNumber: ""))
+                    }
+                    catch{
+                        print(error)
+                    }
                 }
             }
         }
@@ -125,66 +129,36 @@ class ViewModel: ObservableObject {
             }
         }
     }*/
-    func getAllCustomers() {
+    
+   
+    func setCurrentUserByUID(UID: String){
         let db = Firestore.firestore()
-
-        db.collection("Customers").getDocuments { snapshot, error in
-            
-            if error == nil {
-                
-                if let snapshot = snapshot {
-                    
-                    //update list view in the main thread
-                    DispatchQueue.main.async {
-                        self.customerList = snapshot.documents.map { d in
-                            return Customer(id: d.documentID,
-                                            name: d["Name"] as? String ?? "",
-                                            address: d["Address"] as? String ?? "",
-                                            email: d["Email"] as? String ?? "",
-                                            phoneNumber: d["Phonenumber"] as? String ?? "")
-                        }
-                    }
-                        
+        db.collection("Users").document(UID).getDocument{ document,error in
+            if let document = document, document.exists{
+                do{
+                    self.currentUser = try document.data(as: User.self) ?? User(id: "", firstName: "", lastName: "", email: "", role: "", savedMachines: [""])
                 }
-                else {
-                    //handle Errors
+                catch{
+                    print(error)
                 }
             }
         }
     }
     
-        func getCustomerById(id: String) -> Customer{
-        if let customer = customerList.first(where: {$0.id == id}){
-            print(customer)
-            return customer
-        }else{
-            print("Couldnt find a customer")
-            return Customer(id: "Default", name: "Default", address: "Default", email: "Default", phoneNumber: "Default")
-        }
-    }
-    
-    
-    func getUserByRelatedUID(UID: String) -> User{
-        if let user = userList.first(where: {$0.relatedUID == UID}){
-            return user
-        }else{
-            print("Couldnt find a user")
-            return User(id: "Default", relatedUID: "Default",firstName: "Default",lastName: "Default",email: "Default",role: "Default",savedMachines: ["Default"])
-        }
-    }
 
-    func addMachineToSavedMachines(ofUserID: String, MachineID: String){
+    func addMachineToSavedMachinesOfCurrentUser(MachineID: String){
         let db = Firestore.firestore()
-        db.collection("Users").document(getUserByRelatedUID(UID: ofUserID).id).updateData([
+        db.collection("Users").document(currentUser.id ?? "").updateData([
     
-            "SavedMachines": FieldValue.arrayUnion([MachineID])
+            "Gespeicherte Maschinen": FieldValue.arrayUnion([MachineID])
         ])
-        if(!valueAlreadyInArray(array: savedMachines, Value: MachineID)){
-            self.savedMachines.append(MachineID)
+        if(!valueAlreadyInArray(array: currentUser.savedMachines, Value: MachineID)){
+            self.currentUser.savedMachines.append(MachineID)
         }
             
         
     }
+    
     func valueAlreadyInArray(array: [String], Value: String) -> Bool{
         for element in array{
             if element == Value{
@@ -193,10 +167,10 @@ class ViewModel: ObservableObject {
         }
         return false
     }
-    func getAllSavedMachinesOfUser(UID: String){
-        savedMachines = getUserByRelatedUID(UID: UID).savedMachines
-        print(savedMachines)
-    }
+    //func getAllSavedMachinesIDsOfCurrentUser(){
+      //  savedMachinesIDs = currentUser.savedMachines
+        //print(savedMachinesIDs)
+    //}
     
     func setCurrentMachineByID(id: String){
         let db = Firestore.firestore()
@@ -218,12 +192,15 @@ class ViewModel: ObservableObject {
                 let serviceHotline = data?["ServiceHotline"] as? String ?? ""
                 let type = data?["Typ"] as? String ?? ""
                 let customerID = data?["KundenID"] as? String ?? ""
-                self.currentMachine = Machine(id: id, orderDate: orderDate, orderNumber: orderNumber, spareServiceEmail: spareServiceEmail, spareServicePhone: spareServicePhone, warrantyBegin: warrantyBegin, warrantyEnd: warrantyEnd, installationEnd: installationEnd, krauseServiceEmail: krauseServiceEmail, deliveryDate: deliveryDate, serialNumber: serialNumber, serviceEmail: serviceEmail, serviceHotline: serviceHotline, type: type,customerID: customerID)
-        } else {
-            print("Document does not exist")
+                let machineNumber = data?["Maschinennummer"] as? String ?? ""
+                self.currentMachine = Machine(id: id, orderDate: orderDate, orderNumber: orderNumber, spareServiceEmail: spareServiceEmail, spareServicePhone: spareServicePhone, warrantyBegin: warrantyBegin, warrantyEnd: warrantyEnd, installationEnd: installationEnd, krauseServiceEmail: krauseServiceEmail, deliveryDate: deliveryDate, serialNumber: serialNumber, serviceEmail: serviceEmail, serviceHotline: serviceHotline, type: type,customerID: customerID, machineNumber: machineNumber)
+            } else {
+                self.currentMachine = Machine(id: "", orderDate: "", orderNumber: "", spareServiceEmail: "", spareServicePhone: "", warrantyBegin: "", warrantyEnd: "", installationEnd: "", krauseServiceEmail: "", deliveryDate: "", serialNumber: "", serviceEmail: "", serviceHotline: "", type: "",customerID: "", machineNumber: "")
+                print("Document does not exist")
+                }
+            }
         }
-        }
-    }
+    
     
     func getAllMachineSparesByMachineID(machineID: String){
         let db = Firestore.firestore()

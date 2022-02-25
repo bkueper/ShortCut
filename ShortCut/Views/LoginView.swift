@@ -4,7 +4,6 @@
 //
 //  Created by Bjarne Küper on 27.01.22.
 //
-
 import SwiftUI
 import Firebase
 
@@ -116,8 +115,9 @@ struct LoginView: View {
                     return
                 }
                 print("Successfully created user: \(result?.user.uid ?? "")")
+                
                 model.addUser(relatedUID: result?.user.uid ?? "", firstName: firstName, lastName: lastName, email: email, role: "Standard")
-                model.currentUser = User(id: "Default", relatedUID: result?.user.uid ?? "", firstName: firstName, lastName: lastName, email: email, role: "Standard",savedMachines: [""])
+                model.currentUser = User(id: result?.user.uid ?? "", firstName: firstName, lastName: lastName, email: email, role: "Standard",savedMachines: [""])
                 Auth.auth().signIn(withEmail: email, password: password) { result, err in
                     if let err = err {
                         print("Failed to login user: ", err)
@@ -140,19 +140,19 @@ struct LoginView: View {
     }
     private func loginUser(){
         Auth.auth().signIn(withEmail: email, password: password) { result, err in
-            if let err = err {
-                print("Failed to login user: ", err)
-                self.loginStatusMessage = "Failed to login user: \(err)"
-                return
-            }
+                    if let err = err {
+                        print("Failed to login user: ", err)
+                        self.loginStatusMessage = "Failed to login user: \(err)"
+                        return
+                    }
+            self.loginStatusMessage = ""
             print("Successfully logged in as user: \(result?.user.uid ?? "")")
-            //model.currentUID = result?.user.uid ?? ""
             allowNavigation = false
-            model.currentUser = model.getUserByRelatedUID(UID: result?.user.uid ?? "")
-            model.getAllSavedMachinesOfUser(UID: result?.user.uid ?? "")
+            model.setCurrentUserByUID(UID: result?.user.uid ?? "")
             email = ""
             password = ""
             allowNavigation = true
+        
         }
     }
 }

@@ -18,6 +18,7 @@ struct QRCodeGenerator: View {
             VStack{
                 Text("Geben Sie die Maschinennummer ein")
                     .font(.title)
+                    .fontWeight(.semibold)
                     .foregroundColor(Color.white)
                     .multilineTextAlignment(.center)
                 TextField("Maschinennummer", text: $url)

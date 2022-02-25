@@ -22,9 +22,9 @@ struct SpareView: View {
     @EnvironmentObject var model: ViewModel
     @StateObject var spareInformations = SpareInformations()
     @ObservedObject private var spareViewModel = SpareViewModel()
-    @ObservedObject private var machineStateViewModel = MachineStateViewModel()
     @State var result: Result<MFMailComposeResult, Error>? = nil
     @State var showMailSheet = false
+    @State var recievingEmailAdress: String = ""
 //    @State var spareList: [Spare] = [Spare(id: "", itemNumber: "23", description: "Kabel", category: "Kabel", imageName: "Kabel.jpg"),Spare(id: "", itemNumber: "24", description: "Schanier", category: "Schaniere", imageName: "Schanier.jpg" ),
 //                                     Spare(id: "", itemNumber: "25", description: "Schraube", category: "Schrauben", imageName: "Schraube.jpg" )]
     @State var singleSpareList: [SingleSpare] = [SingleSpare]()
@@ -59,6 +59,7 @@ struct SpareView: View {
                 HStack{
                     Spacer()
                     Button{
+                        recievingEmailAdress = model.currentMachine.spareServiceEmail
                         showMailSheet = true
                     }label: {
                         Text("Bestellen")
@@ -75,7 +76,7 @@ struct SpareView: View {
             
             }
         .sheet(isPresented: $showMailSheet){
-            MailView(result: self.$result, Subject: "Ersatzteilbestellung", MsgBody: createOrderText(),RecievingEMailAdress: "ersatzteile@krause.de")
+            MailView(result: self.$result, Subject: "Ersatzteilbestellung", MsgBody: createOrderText(),RecievingEMailAdress: self.$recievingEmailAdress)
         }
         .environmentObject(spareInformations)
         .onAppear {
