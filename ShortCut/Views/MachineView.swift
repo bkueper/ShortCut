@@ -8,7 +8,7 @@
 import SwiftUI
 import UIKit
 import MessageUI
-
+import Firebase
 
 struct MachineInfoView: View {
     var machine: Machine
@@ -103,6 +103,7 @@ struct MachineMenu: View {
     @State var showMailSheet: Bool = false
     @State var showContactPersonMailSheet: Bool = false
     @State var isPresentingWebsiteSheet: Bool = false
+    @State var showFavoriteButton: Bool = true
     @State var documentURL: String = ""
     @State var result: Result<MFMailComposeResult, Error>? = nil
     init(){
@@ -156,7 +157,7 @@ var body: some View{
                     
                 }
                 //ROLLE: alle Hersteller
-                if(model.currentUser.role == "Hersteller" || model.currentUser.role == "Admin"){
+                if(model.currentUser.role == "Hersteller" || model.currentUser.role == "Hersteller Admin"){
                     Section(header: Text("Maschinendateien").foregroundColor(Color.white), footer: Text("Einen der Menüpunkte anklicken um jeweilige Datei anzeigen zu lassen").foregroundColor(Color.white)){
                         ForEach((0..<documentViewModel.documentList.count), id: \.self){document in
                             NavigationLink(destination: SwiftUIWebView(url: URL(string: documentViewModel.documentList[document].URL))){
@@ -166,7 +167,7 @@ var body: some View{
                     }
                 }
                 
-                if(model.currentUser.role == "Hersteller" || model.currentUser.role == "Admin"){
+                if(model.currentUser.role == "Hersteller" || model.currentUser.role == "Hersteller Admin"){
                     if(!customerViewModel.customerContactpersons.isEmpty){
                         Section(header: Text("Ansprechpartner").foregroundColor(Color.white), footer: Text("Rufen Sie die Ansprechpatner des Kunden an oder schreiben Sie eine EMail.").foregroundColor(Color.white)){
                             ForEach((0..<customerViewModel.customerContactpersons.count), id: \.self){contactperson in
@@ -206,7 +207,7 @@ var body: some View{
                         }
                     }
                 }
-                if(model.currentUser.role == "Kunde" || model.currentUser.role == "Admin"){
+                if(model.currentUser.role == "Kunde" || model.currentUser.role == "Hersteller Admin"){
                     Section(header: Text("Kundenservice").foregroundColor(Color.white), footer: Text("Kontaktieren Sie bei Fragen oder Problemen unseren Kundenservice.").foregroundColor(Color.white)){
                         NavigationLink(destination: SpareView()){
                             Text("Ersatzteile bestellen")
@@ -229,7 +230,7 @@ var body: some View{
                             }
                         }
                     }
-                if(model.currentUser.role == "Hersteller" || model.currentUser.role == "Admin"){
+                if(model.currentUser.role == "Hersteller" || model.currentUser.role == "Hersteller Admin"){
                     Section(header: Text("Bauzustand").foregroundColor(Color.white), footer: Text("Die abgehakten Bauzustände sind bereits erreicht. Wenn Sie einen neuen Bauzustand erreicht haben markieren Sie den Bauzustand als erledigt.").foregroundColor(Color.white)){
                         Group{
                             NavigationLink(destination: ReportStatus()){
@@ -247,17 +248,21 @@ var body: some View{
                     customerViewModel.getAllContactPersonsByCustomerID(customerID: model.currentMachine.customerID)
                     documentViewModel.getAllDocumentsByMachineID(machineID: model.currentMachine.id ?? "")
                 }
-            if(!model.savedMachinesIDs.contains(model.currentMachine.id ?? "")){
+            if(!model.currentUser.savedMachines.contains(model.currentMachine.id ?? "") && showFavoriteButton == true){
                     Button{
-                        model.addMachineToSavedMachinesOfCurrentUser(MachineID: model.currentMachine.id ?? "")
-                        model.getAllSavedMachinesOfCurrentUser()
+                        showFavoriteButton = false
+                        let db = Firestore.firestore()
+                        db.collection("Users").document(model.currentUser.id ?? "").updateData([
+                    
+                            "Gespeicherte Maschinen": FieldValue.arrayUnion([model.currentMachine.id ?? ""])
+                        ])
                     }label: {
                         VStack{
-                            Image(systemName: "plus.circle.fill")
+                            Image(systemName: "star.circle.fill")
                                 .resizable()
                                 .frame(width: 32, height: 32)
                                 .foregroundColor(Color.blue)
-                            Text("Maschine speichern")
+                            Text("Zu Favoriten hinzufügen")
                                 .foregroundColor(Color.blue)
                         }
                     }

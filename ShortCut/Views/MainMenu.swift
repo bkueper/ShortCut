@@ -11,6 +11,7 @@ import Firebase
 struct MainMenu: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var model: ViewModel
+    @StateObject var savedMachinesViewModel = SavedMachinesViewModel()
     @State var isShowingWelcomePopover = true
     @State var showConfirmationDialog = false
     
@@ -18,7 +19,6 @@ struct MainMenu: View {
             content
         
     }
-    
     var content: some View {
         TabView{
             MachineInfo()
@@ -34,42 +34,20 @@ struct MainMenu: View {
                 }
             DocumentArchive()
                 .tabItem {
-                    Image(systemName: "archivebox.circle.fill")
+                    Image(systemName: "star.circle.fill")
                 }
-            /*
-            NavigationView{
-                CallClient()
-                    .navigationTitle("Kunden anrufen")
-            }
-                    .tabItem{
-                        Image(systemName: "phone.circle.fill")
+            if(model.currentUser.role == "Hersteller Admin" || model.currentUser.role == "Kunde Admin"){
+                CreateAccount(currentUserRole: model.currentUser.role)
+                    .tabItem {
+                        Image(systemName: "person.fill.badge.plus")
                     }
-            
-                .tabItem{
-                    Image(systemName: "envelope.fill")
-                }
-            NavigationView{
-                DocumentArchive()
-                    .navigationTitle("Gespeicherte Maschinen")
             }
-                .tabItem{
-                    Image(systemName: "archivebox.circle.fill")
-                }*/
-           /* if model.currentUser.role == "Admin" {
-                
-                    FirebaseDemo()
-                        
-                    .tabItem{
-                        Image(systemName: "flame")
-                    }
-            }*/
-        }
+        }.environmentObject(savedMachinesViewModel)
         .confirmationDialog("Wollen Sie sich wirklich ausloggen?", isPresented: $showConfirmationDialog,titleVisibility: .visible) {
             Button("Ausloggen",role: .destructive) {
                 do{
                     model.currentMachine = Machine(id: "", orderDate: "", orderNumber: "", spareServiceEmail: "", spareServicePhone: "", warrantyBegin: "", warrantyEnd: "", installationEnd: "", krauseServiceEmail: "", deliveryDate: "", serialNumber: "", serviceEmail: "", serviceHotline: "", type: "", customerID: "", machineNumber: "")
                     model.currentUser = User(id: "", firstName: "", lastName: "", email: "", role: "", savedMachines: [""])
-                    model.savedMachinesIDs.removeAll()
                     let currentUser = Auth.auth().currentUser?.uid
                     try Auth.auth().signOut()
                     print("Successfully logged out the User: \(String(describing: currentUser))")

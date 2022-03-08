@@ -19,10 +19,9 @@ class ViewModel: ObservableObject {
     @Published var currentUser: User = User(id: "",  firstName: "", lastName: "", email: "", role: "",savedMachines: [""])
     @Published var currentMachine: Machine = Machine(id: "", orderDate: "", orderNumber: "", spareServiceEmail: "", spareServicePhone: "", warrantyBegin: "", warrantyEnd: "", installationEnd: "", krauseServiceEmail: "", deliveryDate: "", serialNumber: "", serviceEmail: "", serviceHotline: "", type: "", customerID: "", machineNumber: "")
     
-    @Published var savedMachinesList = [Machine]()
+    
     @Published var customerList = [Customer]()
     @Published var userList = [User]()
-    var savedMachinesIDs = [String]()
     @Published var machineStates = [MachineState]()
     init(){
     }
@@ -83,22 +82,7 @@ class ViewModel: ObservableObject {
             }
         }
     }
-    func getAllSavedMachinesOfCurrentUser(){
-        let db = Firestore.firestore()
-        
-        for index in 0..<currentUser.savedMachines.count{
-            db.collection("Maschinen").document(currentUser.savedMachines[index]).getDocument { document,error in
-                if let document = document, document.exists{
-                    do{
-                        self.savedMachinesList.append(try document.data(as: Machine.self) ?? Machine(id: "", orderDate: "", orderNumber: "", spareServiceEmail: "", spareServicePhone: "", warrantyBegin: "", warrantyEnd: "", installationEnd: "", krauseServiceEmail: "", deliveryDate: "", serialNumber: "", serviceEmail: "", serviceHotline: "", type: "", customerID: "", machineNumber: ""))
-                    }
-                    catch{
-                        print(error)
-                    }
-                }
-            }
-        }
-    }
+    
     /*
     func getAllMachines() {
         let db = Firestore.firestore()
@@ -146,31 +130,10 @@ class ViewModel: ObservableObject {
     }
     
 
-    func addMachineToSavedMachinesOfCurrentUser(MachineID: String){
-        let db = Firestore.firestore()
-        db.collection("Users").document(currentUser.id ?? "").updateData([
     
-            "Gespeicherte Maschinen": FieldValue.arrayUnion([MachineID])
-        ])
-        if(!valueAlreadyInArray(array: currentUser.savedMachines, Value: MachineID)){
-            self.currentUser.savedMachines.append(MachineID)
-        }
-            
-        
-    }
     
-    func valueAlreadyInArray(array: [String], Value: String) -> Bool{
-        for element in array{
-            if element == Value{
-                return true
-            }
-        }
-        return false
-    }
-    //func getAllSavedMachinesIDsOfCurrentUser(){
-      //  savedMachinesIDs = currentUser.savedMachines
-        //print(savedMachinesIDs)
-    //}
+    
+    
     
     func setCurrentMachineByID(id: String){
         let db = Firestore.firestore()

@@ -29,7 +29,7 @@ struct ReportStatus: View {
                                         StatusListElement(machineState: machineStateViewModel.currentMachineStates[machine]).padding()
                                     }.swipeActions {
                                         Button(role: .destructive){
-                                            if(model.currentUser.role == "Admin"){
+                                            if(model.currentUser.role == "Hersteller Admin"){
                                                 machineStateViewModel.deletemachineState(machineStateID: machineStateViewModel.currentMachineStates[machine].id, machineID: model.currentMachine.id ?? "")
                                                 print("deleted")
                                             }else{

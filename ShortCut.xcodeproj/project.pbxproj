@@ -13,6 +13,7 @@
 		994AB30A27BFC5F000A0F215 /* FirebaseFirestoreSwift-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 994AB30927BFC5F000A0F215 /* FirebaseFirestoreSwift-Beta */; };
 		994FDB862796BECB0087D68C /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 994FDB852796BECB0087D68C /* CodeScanner */; };
 		994FDB8A2796FCE70087D68C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 994FDB892796FCE70087D68C /* GoogleService-Info.plist */; };
+		996C1F6527CE0B4000ADF275 /* CreateAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996C1F6427CE0B4000ADF275 /* CreateAccount.swift */; };
 		997743562799647200A2FD73 /* MachineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997743552799647200A2FD73 /* MachineView.swift */; };
 		997B0A3527C63EE700FBC707 /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997B0A3427C63EE700FBC707 /* Document.swift */; };
 		997B0A3727C640B600FBC707 /* DocumentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997B0A3627C640B600FBC707 /* DocumentViewModel.swift */; };
@@ -55,6 +56,7 @@
 		99324ECB27BD221100A352F3 /* Machine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Machine.swift; sourceTree = "<group>"; };
 		9940FAAA27C3836A004258F3 /* CustomerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerViewModel.swift; sourceTree = "<group>"; };
 		994FDB892796FCE70087D68C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		996C1F6427CE0B4000ADF275 /* CreateAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccount.swift; sourceTree = "<group>"; };
 		997743552799647200A2FD73 /* MachineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineView.swift; sourceTree = "<group>"; };
 		997B0A3427C63EE700FBC707 /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
 		997B0A3627C640B600FBC707 /* DocumentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentViewModel.swift; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 				997743552799647200A2FD73 /* MachineView.swift */,
 				99CAFB8B27A034FB00ACAB0A /* LottieView.swift */,
 				9986679927A2B31900AFE6B8 /* LoginView.swift */,
+				996C1F6427CE0B4000ADF275 /* CreateAccount.swift */,
 				997D37F827B162C1006DB7F3 /* SpareView.swift */,
 				9988864427B4023700434054 /* MailView.swift */,
 				99115BEC27B6964000984CD6 /* QRCodeGenerator.swift */,
@@ -306,6 +309,7 @@
 				99E0ADB827C8FB61002A21AA /* SavedMachinesViewModel.swift in Sources */,
 				9988864727B410C800434054 /* Spare.swift in Sources */,
 				997CD11C27983215009EE598 /* Customer.swift in Sources */,
+				996C1F6527CE0B4000ADF275 /* CreateAccount.swift in Sources */,
 				9984B70527B27A9600CCE0EC /* MachineState.swift in Sources */,
 				B7809EAE2770BA7200D1FA1C /* ContentView.swift in Sources */,
 				99115BED27B6964000984CD6 /* QRCodeGenerator.swift in Sources */,
