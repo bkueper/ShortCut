@@ -172,7 +172,7 @@ class ViewModel: ObservableObject {
                 if let snapshot = snapshot {
                         DispatchQueue.main.async {
                             self.machineSpareList = snapshot.documents.map { document in
-                                return MachineSpare(id: document.documentID, arcticleNumber: document["Artikelnummer"]as? String ?? "", machineID: document["MaschinenID"]as? String ?? "", wearIntervall: document["Verschleißintervall"]as? String ?? "")
+                                return MachineSpare(id: document.documentID, articleNumber: document["Artikelnummer"]as? String ?? "", machineID: document["MaschinenID"]as? String ?? "", wearIntervall: document["Verschleißintervall"]as? String ?? "")
                             }
                         }
                 }

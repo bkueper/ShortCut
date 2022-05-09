@@ -17,7 +17,7 @@ struct LoginView: View {
     @State var firstName = ""
     @State var lastName = ""
     @State var allowNavigation = false
-    
+
     var body: some View {
             
             content
@@ -92,7 +92,6 @@ struct LoginView: View {
                     }
             self.loginStatusMessage = ""
             print("Successfully logged in as user: \(result?.user.uid ?? "")")
-            allowNavigation = false
             model.setCurrentUserByUID(UID: result?.user.uid ?? "")
             email = ""
             password = ""

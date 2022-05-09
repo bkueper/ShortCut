@@ -10,7 +10,7 @@ import Firebase
 
 struct MachineSpare: Identifiable{
     var id: String
-    var arcticleNumber: String
+    var articleNumber: String
     var machineID: String
     var wearIntervall: String 
     

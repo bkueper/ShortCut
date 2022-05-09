@@ -19,6 +19,7 @@ struct CreateAccount: View {
     @State var firstName = ""
     @State var lastName = ""
     @State var allowNavigation = false
+    @State var showConfirmationDialogue = false
     var states:[String] = [String]()
     @State private var selectedRole = "Hersteller User"
     init(currentUserRole: String){
@@ -82,7 +83,7 @@ struct CreateAccount: View {
                     }
         
                         Button {
-                            createNewAccount()
+                            showConfirmationDialogue = true
                         } label: {
                             HStack {
                                 Spacer()
@@ -101,6 +102,11 @@ struct CreateAccount: View {
                     
                     Text(self.loginStatusMessage)
                         .foregroundColor(.red)
+                }.confirmationDialog("Wollen Sie den Nutzer \(firstName) \(lastName) erstellen?", isPresented: $showConfirmationDialogue,titleVisibility: .visible) {
+                    Button("Hinzufügen",role: .destructive) {
+                        createNewAccount()
+                    }
+                    Button("Abbrechen",role: .cancel){}
                 }
                 .padding()
                 

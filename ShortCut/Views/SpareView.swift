@@ -17,6 +17,13 @@ class SpareInformations: ObservableObject {
             spareValues.append(0)
         }
     }
+    func getWearIntervall(array: [MachineSpare], articleNumber: String)->String{
+        if let machineSpare = array.first(where: {$0.articleNumber == articleNumber}) {
+            return machineSpare.wearIntervall
+        } else {
+           return "Error"
+        }
+    }
 }
 struct SpareView: View {
     @EnvironmentObject var model: ViewModel
@@ -41,7 +48,7 @@ struct SpareView: View {
                 Form {
                     Section(header: Text("Ersatzteilliste").foregroundColor(Color.white), footer: Text("Fügen Sie alle gewünschten Ersatzteile hinzu.").foregroundColor(Color.white)){
                         ForEach((0..<spareViewModel.spareList.count), id: \.self){spare in
-                            SingleSpare(name: spareViewModel.spareList[spare].description1GER, spareNumber: spare, imageName: spareViewModel.spareList[spare].imageName)
+                            SingleSpare(name: spareViewModel.spareList[spare].description1GER, spareNumber: spare, wearIntervall: spareInformations.getWearIntervall(array: model.machineSpareList, articleNumber: spareViewModel.spareList[spare].id), imageName: spareViewModel.spareList[spare].imageName)
                             
                         }
                         }
@@ -49,7 +56,7 @@ struct SpareView: View {
                 .onAppear {
                     print(self.model.machineSpareList.count)
                     for index in 0..<(self.model.machineSpareList.count){
-                        self.spareViewModel.getSingleSpareByArticleNumber(articleNumber: self.model.machineSpareList[index].arcticleNumber)
+                        self.spareViewModel.getSingleSpareByArticleNumber(articleNumber: self.model.machineSpareList[index].articleNumber)
                     }
                     
                 }
@@ -96,6 +103,7 @@ struct SingleSpare: View {
     @EnvironmentObject var spareInformations: SpareInformations
     var name: String
     var spareNumber: Int
+    var wearIntervall: String
     var imageName: String
     @State var url = ""
     @State var amount: Int = 0
@@ -111,16 +119,9 @@ struct SingleSpare: View {
             VStack(alignment: .leading){
             Text(name)
                 .font(.body)
-
-            Stepper("Anzahl: \(amount)", onIncrement: {
-                spareInformations.spareValues[spareNumber] += 1
-                amount += 1
-            }, onDecrement: {
-                if(amount >= 1){
-                spareInformations.spareValues[spareNumber] -= 1
-                    amount -= 1
-                }
-            })
+            Text("Verschleißintervall: \(wearIntervall)")
+                    .font(.footnote)
+            Stepper("Anzahl: \(amount)", value: $amount, in: 0...Int.max)
             }
         }.onAppear {
             let storageRef = Storage.storage().reference()
