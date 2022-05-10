@@ -10,7 +10,7 @@ import Firebase
 import CodeScanner
 
 struct ReportStatus: View {
-    @EnvironmentObject var model: ViewModel
+    @EnvironmentObject var environment: EnvironmentHelper
     @ObservedObject private var machineStateViewModel = MachineStateViewModel()
     @State var showConfirmationDialog: Bool = false
     @State private var customStateText: String = ""
@@ -29,8 +29,8 @@ struct ReportStatus: View {
                                         StatusListElement(machineState: machineStateViewModel.currentMachineStates[machine]).padding()
                                     }.swipeActions {
                                         Button(role: .destructive){
-                                            if(model.currentUser.role == "Hersteller Admin"){
-                                                machineStateViewModel.deletemachineState(machineStateID: machineStateViewModel.currentMachineStates[machine].id, machineID: model.currentMachine.id ?? "")
+                                            if(environment.currentUser.role == "Hersteller Admin"){
+                                                machineStateViewModel.deletemachineState(machineStateID: machineStateViewModel.currentMachineStates[machine].id, machineID: environment.currentMachine.id ?? "")
                                                 print("deleted")
                                             }else{
                                                 showAlert = true
@@ -42,7 +42,7 @@ struct ReportStatus: View {
                                 }
                                 }
                         }.onAppear {
-                            self.machineStateViewModel.getAllMachineStatesByMachineID(machineID: model.currentMachine.id ?? "")
+                            self.machineStateViewModel.getAllMachineStatesByMachineID(machineID: environment.currentMachine.id ?? "")
                         }.alert("Keine Berechtigung Zustände zu löschen", isPresented: $showAlert) {
                             Button("OK", role: .cancel){}
                         }
@@ -85,9 +85,9 @@ struct ReportStatus: View {
                     }.confirmationDialog("Wollen Sie den Bauzustand \(selectedState) hinzufügen?", isPresented: $showConfirmationDialog,titleVisibility: .visible) {
                         Button("Hinzufügen",role: .destructive) {
                             if(selectedState != "Benutzerdefiniert"){
-                                machineStateViewModel.addMachineState(description: selectedState, creatorName: "\(model.currentUser.firstName) \(model.currentUser.lastName)", machineID: model.currentMachine.id ?? "", creationDate: Timestamp.init())
+                                machineStateViewModel.addMachineState(description: selectedState, creatorName: "\(environment.currentUser.firstName) \(environment.currentUser.lastName)", machineID: environment.currentMachine.id ?? "", creationDate: Timestamp.init())
                             }else{
-                                machineStateViewModel.addMachineState(description: customStateText, creatorName: "\(model.currentUser.firstName) \(model.currentUser.lastName)", machineID: model.currentMachine.id ?? "", creationDate: Timestamp.init())
+                                machineStateViewModel.addMachineState(description: customStateText, creatorName: "\(environment.currentUser.firstName) \(environment.currentUser.lastName)", machineID: environment.currentMachine.id ?? "", creationDate: Timestamp.init())
                             }
                                 selectedState = "Benutzerdefiniert"
                                 customStateText = ""
@@ -102,7 +102,7 @@ struct ReportStatus: View {
     
 }
 struct StatusListElement: View{
-    @EnvironmentObject var model: ViewModel
+    @EnvironmentObject var environment: EnvironmentHelper
     var machineState: MachineState
     init(machineState: MachineState){
         self.machineState = machineState

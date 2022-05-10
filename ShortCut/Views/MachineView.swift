@@ -92,7 +92,7 @@ struct MachineList: View {
 }
 */
 struct MachineMenu: View {
-    @EnvironmentObject var model: ViewModel
+    @EnvironmentObject var environment: EnvironmentHelper
     @ObservedObject private var customerViewModel = CustomerViewModel()
     @ObservedObject private var documentViewModel = DocumentViewModel()
     //var machine: Machine
@@ -120,32 +120,32 @@ var body: some View{
                     HStack{
                         Text("Typ: ")
                             .fontWeight(.semibold)
-                        Text(model.currentMachine.type)
+                        Text(environment.currentMachine.type)
                     }
                     HStack{
                         Text("Bestellnummer: ")
                             .fontWeight(.semibold)
-                        Text(model.currentMachine.orderNumber)
+                        Text(environment.currentMachine.orderNumber)
                     }
                     HStack{
                         Text("Liefertermin: ")
                             .fontWeight(.semibold)
-                        Text(model.currentMachine.deliveryDate)
+                        Text(environment.currentMachine.deliveryDate)
                     }
                     HStack{
                         Text("Installationsende: ")
                             .fontWeight(.semibold)
-                        Text(model.currentMachine.installationEnd)
+                        Text(environment.currentMachine.installationEnd)
                     }
                     HStack{
                         Text("Garantiebeginn: ")
                             .fontWeight(.semibold)
-                        Text(model.currentMachine.warrantyBegin)
+                        Text(environment.currentMachine.warrantyBegin)
                     }
                     HStack{
                         Text("Garantieende: ")
                             .fontWeight(.semibold)
-                        Text(model.currentMachine.warrantyEnd)
+                        Text(environment.currentMachine.warrantyEnd)
                     }
                     HStack{
                         Text("Kunde: ")
@@ -157,7 +157,7 @@ var body: some View{
                     
                 }
                 //ROLLE: alle Hersteller
-                if(model.currentUser.role == "Hersteller" || model.currentUser.role == "Hersteller Admin"){
+                if(environment.currentUser.role == "Hersteller" || environment.currentUser.role == "Hersteller Admin"){
                     Section(header: Text("Maschinendateien").foregroundColor(Color.white), footer: Text("Einen der Menüpunkte anklicken um jeweilige Datei anzeigen zu lassen").foregroundColor(Color.white)){
                         ForEach((0..<documentViewModel.documentList.count), id: \.self){document in
                             NavigationLink(destination: SwiftUIWebView(url: URL(string: documentViewModel.documentList[document].URL))){
@@ -167,7 +167,7 @@ var body: some View{
                     }
                 }
                 
-                if(model.currentUser.role == "Hersteller" || model.currentUser.role == "Hersteller Admin"){
+                if(environment.currentUser.role == "Hersteller" || environment.currentUser.role == "Hersteller Admin"){
                     if(!customerViewModel.customerContactpersons.isEmpty){
                         Section(header: Text("Ansprechpartner").foregroundColor(Color.white), footer: Text("Rufen Sie die Ansprechpatner des Kunden an oder schreiben Sie eine EMail.").foregroundColor(Color.white)){
                             ForEach((0..<customerViewModel.customerContactpersons.count), id: \.self){contactperson in
@@ -207,7 +207,7 @@ var body: some View{
                         }
                     }
                 }
-                if(model.currentUser.role == "Kunde" || model.currentUser.role == "Hersteller Admin"){
+                if(environment.currentUser.role == "Kunde" || environment.currentUser.role == "Hersteller Admin"){
                     Section(header: Text("Kundenservice").foregroundColor(Color.white), footer: Text("Kontaktieren Sie bei Fragen oder Problemen unseren Kundenservice.").foregroundColor(Color.white)){
                         NavigationLink(destination: SpareView()){
                             Text("Ersatzteile bestellen")
@@ -230,7 +230,7 @@ var body: some View{
                             }
                         }
                     }
-                if(model.currentUser.role == "Hersteller" || model.currentUser.role == "Hersteller Admin"){
+                if(environment.currentUser.role == "Hersteller" || environment.currentUser.role == "Hersteller Admin"){
                     Section(header: Text("Bauzustand").foregroundColor(Color.white), footer: Text("Die abgehakten Bauzustände sind bereits erreicht. Wenn Sie einen neuen Bauzustand erreicht haben markieren Sie den Bauzustand als erledigt.").foregroundColor(Color.white)){
                         Group{
                             NavigationLink(destination: ReportStatus()){
@@ -242,19 +242,19 @@ var body: some View{
                         }
                     }
                 
-            }.navigationTitle(model.currentMachine.id ?? "")
+            }.navigationTitle(environment.currentMachine.id ?? "")
                 .onAppear {
-                    customerViewModel.setCurrentMachineCustomer(customerID: model.currentMachine.customerID)
-                    customerViewModel.getAllContactPersonsByCustomerID(customerID: model.currentMachine.customerID)
-                    documentViewModel.getAllDocumentsByMachineID(machineID: model.currentMachine.id ?? "")
+                    customerViewModel.setCurrentMachineCustomer(customerID: environment.currentMachine.customerID)
+                    customerViewModel.getAllContactPersonsByCustomerID(customerID: environment.currentMachine.customerID)
+                    documentViewModel.getAllDocumentsByMachineID(machineID: environment.currentMachine.id ?? "")
                 }
-            if(!model.currentUser.savedMachines.contains(model.currentMachine.id ?? "") && showFavoriteButton == true){
+            if(!environment.currentUser.savedMachines.contains(environment.currentMachine.id ?? "") && showFavoriteButton == true){
                     Button{
                         showFavoriteButton = false
                         let db = Firestore.firestore()
-                        db.collection("Users").document(model.currentUser.id ?? "").updateData([
+                        db.collection("Users").document(environment.currentUser.id ?? "").updateData([
                     
-                            "Gespeicherte Maschinen": FieldValue.arrayUnion([model.currentMachine.id ?? ""])
+                            "Gespeicherte Maschinen": FieldValue.arrayUnion([environment.currentMachine.id ?? ""])
                         ])
                     }label: {
                         VStack{

@@ -26,7 +26,7 @@ class SpareInformations: ObservableObject {
     }
 }
 struct SpareView: View {
-    @EnvironmentObject var model: ViewModel
+    @EnvironmentObject var environment: EnvironmentHelper
     @StateObject var spareInformations = SpareInformations()
     @ObservedObject private var spareViewModel = SpareViewModel()
     @State var result: Result<MFMailComposeResult, Error>? = nil
@@ -48,15 +48,15 @@ struct SpareView: View {
                 Form {
                     Section(header: Text("Ersatzteilliste").foregroundColor(Color.white), footer: Text("Fügen Sie alle gewünschten Ersatzteile hinzu.").foregroundColor(Color.white)){
                         ForEach((0..<spareViewModel.spareList.count), id: \.self){spare in
-                            SingleSpare(name: spareViewModel.spareList[spare].description1GER, spareNumber: spare, wearIntervall: spareInformations.getWearIntervall(array: model.machineSpareList, articleNumber: spareViewModel.spareList[spare].id), imageName: spareViewModel.spareList[spare].imageName)
+                            SingleSpare(name: spareViewModel.spareList[spare].description1GER, spareNumber: spare, wearIntervall: spareInformations.getWearIntervall(array: environment.machineSpareList, articleNumber: spareViewModel.spareList[spare].id), imageName: spareViewModel.spareList[spare].imageName)
                             
                         }
                         }
                 }
                 .onAppear {
-                    print(self.model.machineSpareList.count)
-                    for index in 0..<(self.model.machineSpareList.count){
-                        self.spareViewModel.getSingleSpareByArticleNumber(articleNumber: self.model.machineSpareList[index].articleNumber)
+                    print(self.environment.machineSpareList.count)
+                    for index in 0..<(self.environment.machineSpareList.count){
+                        self.spareViewModel.getSingleSpareByArticleNumber(articleNumber: self.environment.machineSpareList[index].articleNumber)
                     }
                     
                 }
@@ -66,7 +66,7 @@ struct SpareView: View {
                 HStack{
                     Spacer()
                     Button{
-                        recievingEmailAdress = model.currentMachine.spareServiceEmail
+                        recievingEmailAdress = environment.currentMachine.spareServiceEmail
                         showMailSheet = true
                     }label: {
                         Text("Bestellen")

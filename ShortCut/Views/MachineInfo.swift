@@ -10,7 +10,7 @@ import Firebase
 import CodeScanner
 
 struct MachineInfo: View {
-    @EnvironmentObject var model: ViewModel
+    @EnvironmentObject var environment: EnvironmentHelper
     //@ObservedObject var model = ViewModel()
     @State var isPresentingScanner = false
     @State var isPresentingMachineViewLink = false
@@ -29,8 +29,8 @@ struct MachineInfo: View {
                 self.scannedCode = code.string
                 self.isPresentingScanner = false
                 self.isPresentingMachineViewLink = true
-                model.setCurrentMachineByID(id: scannedCode)
-                model.getAllMachineSparesByMachineID(machineID: scannedCode)
+                environment.setCurrentMachineByID(id: scannedCode)
+                environment.getAllMachineSparesByMachineID(machineID: scannedCode)
                 
                     
                 
@@ -64,18 +64,18 @@ struct MachineInfo: View {
         ZStack{
             LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 0.2398733385, green: 0, blue: 0.7439433396, alpha: 1)), Color(#colorLiteral(red: 0.1026695753, green: 0, blue: 0.3184194925, alpha: 1))]), startPoint: .topLeading,endPoint: .bottom).ignoresSafeArea()
             VStack{
-                if model.currentMachine.id == ""{
+                if environment.currentMachine.id == ""{
                     Text("Scanne einen QR- Code.")
                         .font(.title)
                         .fontWeight(.regular)
                         .foregroundColor(Color.white)
                 }else{
-                    Text(model.currentMachine.id ?? "")
+                    Text(environment.currentMachine.id ?? "")
                         .font(.title)
                         .fontWeight(.regular)
                         .foregroundColor(Color.white)
                 }
-                if isPresentingMachineViewLink && model.currentMachine.id != "" {
+                if isPresentingMachineViewLink && environment.currentMachine.id != "" {
                     //let presentedMachine: Machine = model.currentMachine
                     NavigationLink(destination: MachineMenu()){
                         Text("Maschineninformationen")

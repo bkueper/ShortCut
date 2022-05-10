@@ -10,7 +10,7 @@ import Firebase
 
 struct MainMenu: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @EnvironmentObject var model: ViewModel
+    @EnvironmentObject var environment: EnvironmentHelper
     @StateObject var savedMachinesViewModel = SavedMachinesViewModel()
     @State var isShowingWelcomePopover = true
     @State var showConfirmationDialog = false
@@ -26,7 +26,7 @@ struct MainMenu: View {
                     Image(systemName: "info.circle.fill")
                     }
                     .popover(isPresented: $isShowingWelcomePopover, content: {
-                        WelcomeView(firstName: model.currentUser.firstName)
+                        WelcomeView(firstName: environment.currentUser.firstName)
                         })
             QRCodeGenerator()
                 .tabItem{
@@ -36,8 +36,8 @@ struct MainMenu: View {
                 .tabItem {
                     Image(systemName: "star.circle.fill")
                 }
-            if(model.currentUser.role == "Hersteller Admin" || model.currentUser.role == "Kunde Admin"){
-                CreateAccount(currentUserRole: model.currentUser.role)
+            if(environment.currentUser.role == "Hersteller Admin" || environment.currentUser.role == "Kunde Admin"){
+                CreateAccount(currentUserRole: environment.currentUser.role)
                     .tabItem {
                         Image(systemName: "person.fill.badge.plus")
                     }
@@ -46,8 +46,8 @@ struct MainMenu: View {
         .confirmationDialog("Wollen Sie sich wirklich ausloggen?", isPresented: $showConfirmationDialog,titleVisibility: .visible) {
             Button("Ausloggen",role: .destructive) {
                 do{
-                    model.currentMachine = Machine(id: "", orderDate: "", orderNumber: "", spareServiceEmail: "", spareServicePhone: "", warrantyBegin: "", warrantyEnd: "", installationEnd: "", krauseServiceEmail: "", deliveryDate: "", serialNumber: "", serviceEmail: "", serviceHotline: "", type: "", customerID: "", machineNumber: "")
-                    model.currentUser = User(id: "", firstName: "", lastName: "", email: "", role: "", savedMachines: [""])
+                    environment.currentMachine = Machine(id: "", orderDate: "", orderNumber: "", spareServiceEmail: "", spareServicePhone: "", warrantyBegin: "", warrantyEnd: "", installationEnd: "", krauseServiceEmail: "", deliveryDate: "", serialNumber: "", serviceEmail: "", serviceHotline: "", type: "", customerID: "", machineNumber: "")
+                    environment.currentUser = User(id: "", firstName: "", lastName: "", email: "", role: "", savedMachines: [""])
                     let currentUser = Auth.auth().currentUser?.uid
                     try Auth.auth().signOut()
                     print("Successfully logged out the User: \(String(describing: currentUser))")

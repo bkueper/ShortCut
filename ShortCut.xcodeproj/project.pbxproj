@@ -17,8 +17,7 @@
 		997743562799647200A2FD73 /* MachineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997743552799647200A2FD73 /* MachineView.swift */; };
 		997B0A3527C63EE700FBC707 /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997B0A3427C63EE700FBC707 /* Document.swift */; };
 		997B0A3727C640B600FBC707 /* DocumentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997B0A3627C640B600FBC707 /* DocumentViewModel.swift */; };
-		997CD1152798057A009EE598 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997CD1142798057A009EE598 /* ViewModel.swift */; };
-		997CD11827980D8F009EE598 /* FirebaseDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997CD11727980D8F009EE598 /* FirebaseDemo.swift */; };
+		997CD1152798057A009EE598 /* EnvironmentHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997CD1142798057A009EE598 /* EnvironmentHelper.swift */; };
 		997CD11C27983215009EE598 /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997CD11B27983215009EE598 /* Customer.swift */; };
 		997D37F927B162C2006DB7F3 /* SpareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997D37F827B162C1006DB7F3 /* SpareView.swift */; };
 		9984B70527B27A9600CCE0EC /* MachineState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984B70427B27A9600CCE0EC /* MachineState.swift */; };
@@ -46,7 +45,6 @@
 		B7809EB32770BA7500D1FA1C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B7809EB22770BA7500D1FA1C /* Preview Assets.xcassets */; };
 		B7F411D92771F351008FC313 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F411D82771F351008FC313 /* MainMenu.swift */; };
 		B7F411DD277207E3008FC313 /* MachineInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F411DC277207E3008FC313 /* MachineInfo.swift */; };
-		B7F411DF2772139C008FC313 /* CallClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F411DE2772139C008FC313 /* CallClient.swift */; };
 		B7F411E127721638008FC313 /* ReportStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F411E027721638008FC313 /* ReportStatus.swift */; };
 		B7F411E327734333008FC313 /* DocumentArchive.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F411E227734333008FC313 /* DocumentArchive.swift */; };
 /* End PBXBuildFile section */
@@ -60,8 +58,7 @@
 		997743552799647200A2FD73 /* MachineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineView.swift; sourceTree = "<group>"; };
 		997B0A3427C63EE700FBC707 /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
 		997B0A3627C640B600FBC707 /* DocumentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentViewModel.swift; sourceTree = "<group>"; };
-		997CD1142798057A009EE598 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
-		997CD11727980D8F009EE598 /* FirebaseDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseDemo.swift; sourceTree = "<group>"; };
+		997CD1142798057A009EE598 /* EnvironmentHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentHelper.swift; sourceTree = "<group>"; };
 		997CD11B27983215009EE598 /* Customer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Customer.swift; sourceTree = "<group>"; };
 		997D37F827B162C1006DB7F3 /* SpareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpareView.swift; sourceTree = "<group>"; };
 		9984B70427B27A9600CCE0EC /* MachineState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineState.swift; sourceTree = "<group>"; };
@@ -85,7 +82,6 @@
 		B7809EB22770BA7500D1FA1C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B7F411D82771F351008FC313 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
 		B7F411DC277207E3008FC313 /* MachineInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineInfo.swift; sourceTree = "<group>"; };
-		B7F411DE2772139C008FC313 /* CallClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallClient.swift; sourceTree = "<group>"; };
 		B7F411E027721638008FC313 /* ReportStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportStatus.swift; sourceTree = "<group>"; };
 		B7F411E227734333008FC313 /* DocumentArchive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentArchive.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -126,7 +122,7 @@
 		997CD11327980561009EE598 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				997CD1142798057A009EE598 /* ViewModel.swift */,
+				997CD1142798057A009EE598 /* EnvironmentHelper.swift */,
 				9984B70627B2ACBF00CCE0EC /* MachineStateViewModel.swift */,
 				998CD4AD27BAAC0500B4AB1B /* SpareViewModel.swift */,
 				9940FAAA27C3836A004258F3 /* CustomerViewModel.swift */,
@@ -144,10 +140,8 @@
 				B7541A1127831C7B00B2A6E5 /* WebView.swift */,
 				B7F411D82771F351008FC313 /* MainMenu.swift */,
 				B7F411DC277207E3008FC313 /* MachineInfo.swift */,
-				B7F411DE2772139C008FC313 /* CallClient.swift */,
 				B7F411E027721638008FC313 /* ReportStatus.swift */,
 				B7F411E227734333008FC313 /* DocumentArchive.swift */,
-				997CD11727980D8F009EE598 /* FirebaseDemo.swift */,
 				997743552799647200A2FD73 /* MachineView.swift */,
 				99CAFB8B27A034FB00ACAB0A /* LottieView.swift */,
 				9986679927A2B31900AFE6B8 /* LoginView.swift */,
@@ -313,7 +307,6 @@
 				9984B70527B27A9600CCE0EC /* MachineState.swift in Sources */,
 				B7809EAE2770BA7200D1FA1C /* ContentView.swift in Sources */,
 				99115BED27B6964000984CD6 /* QRCodeGenerator.swift in Sources */,
-				997CD11827980D8F009EE598 /* FirebaseDemo.swift in Sources */,
 				99324ECC27BD221100A352F3 /* Machine.swift in Sources */,
 				B7F411DD277207E3008FC313 /* MachineInfo.swift in Sources */,
 				997B0A3527C63EE700FBC707 /* Document.swift in Sources */,
@@ -323,12 +316,11 @@
 				9984B70727B2ACBF00CCE0EC /* MachineStateViewModel.swift in Sources */,
 				9986679A27A2B31900AFE6B8 /* LoginView.swift in Sources */,
 				B7809EAC2770BA7200D1FA1C /* ShortCutApp.swift in Sources */,
-				B7F411DF2772139C008FC313 /* CallClient.swift in Sources */,
 				997B0A3727C640B600FBC707 /* DocumentViewModel.swift in Sources */,
 				B7541A1227831C7B00B2A6E5 /* WebView.swift in Sources */,
 				9986679C27A2BD9300AFE6B8 /* User.swift in Sources */,
 				998CD4B027BAAF2F00B4AB1B /* MachineSpare.swift in Sources */,
-				997CD1152798057A009EE598 /* ViewModel.swift in Sources */,
+				997CD1152798057A009EE598 /* EnvironmentHelper.swift in Sources */,
 				998CD4AE27BAAC0500B4AB1B /* SpareViewModel.swift in Sources */,
 				99A08C7B27C3BE9B00B91BDE /* Contactperson.swift in Sources */,
 				B7F411E127721638008FC313 /* ReportStatus.swift in Sources */,

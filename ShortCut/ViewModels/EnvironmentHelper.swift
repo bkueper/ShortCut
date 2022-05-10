@@ -7,7 +7,7 @@
 import Foundation
 import Firebase
 import FirebaseFirestoreSwift
-class ViewModel: ObservableObject {
+class EnvironmentHelper: ObservableObject {
     @Published var customerId: String = ""
     @Published var name: String = "Kunde hinzufügen"
     @Published var address: String = ""

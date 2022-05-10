@@ -8,7 +8,7 @@ import SwiftUI
 import Firebase
 
 struct LoginView: View {
-    @EnvironmentObject var model: ViewModel
+    @EnvironmentObject var environment: EnvironmentHelper
     @State var isLoginMode = true
     @State var email = "bjarne.kueper@web.de"
     @State var password = "FCBayern2411"
@@ -92,7 +92,7 @@ struct LoginView: View {
                     }
             self.loginStatusMessage = ""
             print("Successfully logged in as user: \(result?.user.uid ?? "")")
-            model.setCurrentUserByUID(UID: result?.user.uid ?? "")
+            environment.setCurrentUserByUID(UID: result?.user.uid ?? "")
             email = ""
             password = ""
             allowNavigation = true

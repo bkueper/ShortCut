@@ -8,7 +8,7 @@
 import SwiftUI
 import Firebase
 struct DocumentArchive: View {
-    @EnvironmentObject var model: ViewModel
+    @EnvironmentObject var environment: EnvironmentHelper
     @EnvironmentObject var savedMachinesViewModel: SavedMachinesViewModel
     @State var showNavigationLink = false
     @State var showDeleteRequest = false
@@ -31,8 +31,8 @@ struct DocumentArchive: View {
                                     .onTapGesture {
                                         showNavigationLink = true
                                         clickedMachineLinkMachineID = machineToAdd.id ?? ""
-                                        model.setCurrentMachineByID(id: machineToAdd.id ?? "")
-                                        model.getAllMachineSparesByMachineID(machineID: machineToAdd.id ?? "")
+                                        environment.setCurrentMachineByID(id: machineToAdd.id ?? "")
+                                        environment.getAllMachineSparesByMachineID(machineID: machineToAdd.id ?? "")
                                     }
                                     .onLongPressGesture{
                                         simpleVibration()
@@ -43,9 +43,9 @@ struct DocumentArchive: View {
                             }
                         }
                 Button{
-                    model.setCurrentUserByUID(UID: model.currentUser.id ?? "")
+                    environment.setCurrentUserByUID(UID: environment.currentUser.id ?? "")
                     savedMachinesViewModel.savedMachinesList.removeAll()
-                    savedMachinesViewModel.getAllSavedMachineIDsOfUser(UserId: model.currentUser.id ?? "")
+                    savedMachinesViewModel.getAllSavedMachineIDsOfUser(UserId: environment.currentUser.id ?? "")
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                         savedMachinesViewModel.getAllSavedMachines()
                     }
@@ -73,9 +73,9 @@ struct DocumentArchive: View {
             }
             .onAppear {
                 if(savedMachinesViewModel.savedMachinesList.isEmpty){
-                    model.setCurrentUserByUID(UID: model.currentUser.id ?? "")
+                    environment.setCurrentUserByUID(UID: environment.currentUser.id ?? "")
                     savedMachinesViewModel.savedMachinesList.removeAll()
-                    savedMachinesViewModel.getAllSavedMachineIDsOfUser(UserId: model.currentUser.id ?? "")
+                    savedMachinesViewModel.getAllSavedMachineIDsOfUser(UserId: environment.currentUser.id ?? "")
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                         savedMachinesViewModel.getAllSavedMachines()
                         }
@@ -84,10 +84,10 @@ struct DocumentArchive: View {
             }
             .confirmationDialog("Wollen Sie die Maschine \(longPressedMachineID) aus Favoriten entfernen?", isPresented: $showDeleteRequest,titleVisibility: .visible) {
                 Button("Maschine entfernen",role: .destructive) {
-                    savedMachinesViewModel.deleteSavedMachine(machineID: longPressedMachineID, userID: model.currentUser.id ?? "")
-                    model.setCurrentUserByUID(UID: model.currentUser.id ?? "")
+                    savedMachinesViewModel.deleteSavedMachine(machineID: longPressedMachineID, userID: environment.currentUser.id ?? "")
+                    environment.setCurrentUserByUID(UID: environment.currentUser.id ?? "")
                     savedMachinesViewModel.savedMachinesList.removeAll()
-                    savedMachinesViewModel.getAllSavedMachineIDsOfUser(UserId: model.currentUser.id ?? "")
+                    savedMachinesViewModel.getAllSavedMachineIDsOfUser(UserId: environment.currentUser.id ?? "")
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                         savedMachinesViewModel.getAllSavedMachines()
                         }

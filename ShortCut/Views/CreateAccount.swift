@@ -11,7 +11,7 @@ import SwiftUI
 import Firebase
 
 struct CreateAccount: View {
-    @EnvironmentObject var model: ViewModel
+    @EnvironmentObject var environment: EnvironmentHelper
     @State var email = ""
     @State var password = ""
     @State var passwordVerification = ""
@@ -129,7 +129,7 @@ struct CreateAccount: View {
                 }
                 print("Successfully created user: \(result?.user.uid ?? "")")
                 
-                model.addUser(relatedUID: result?.user.uid ?? "", firstName: firstName, lastName: lastName, email: email, role: selectedRole)
+                environment.addUser(relatedUID: result?.user.uid ?? "", firstName: firstName, lastName: lastName, email: email, role: selectedRole)
                 email = ""
                 firstName = ""
                 lastName = ""

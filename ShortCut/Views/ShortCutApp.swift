@@ -9,7 +9,7 @@ import SwiftUI
 import Firebase
 @main
 struct ShortCutApp: App {
-    @StateObject var model = ViewModel()
+    @StateObject var environment = EnvironmentHelper()
     init(){
         FirebaseApp.configure()
         let navBarAppearance = UINavigationBar.appearance()
@@ -20,7 +20,7 @@ struct ShortCutApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView().environmentObject(model)
+            ContentView().environmentObject(environment)
         }
     }
 }
