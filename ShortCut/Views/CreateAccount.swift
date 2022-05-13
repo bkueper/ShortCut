@@ -15,7 +15,7 @@ struct CreateAccount: View {
     @State var email = ""
     @State var password = ""
     @State var passwordVerification = ""
-    @State var loginStatusMessage = ""
+    @State var statusMessage = ""
     @State var firstName = ""
     @State var lastName = ""
     @State var allowNavigation = false
@@ -100,7 +100,7 @@ struct CreateAccount: View {
                             }
                         }.padding(.vertical,35)
                     
-                    Text(self.loginStatusMessage)
+                    Text(self.statusMessage)
                         .foregroundColor(.red)
                 }.confirmationDialog("Wollen Sie den Nutzer \(firstName) \(lastName) erstellen?", isPresented: $showConfirmationDialogue,titleVisibility: .visible) {
                     Button("Hinzufügen",role: .destructive) {
@@ -124,7 +124,7 @@ struct CreateAccount: View {
             Auth.auth().createUser(withEmail: email, password: password) { result, err in
                 if let err = err {
                     print("Failed to create user: ", err)
-                    self.loginStatusMessage = "Failed to create user: \(err)"
+                    self.statusMessage = "Failed to create user: \(err)"
                     return
                 }
                 print("Successfully created user: \(result?.user.uid ?? "")")
@@ -135,10 +135,10 @@ struct CreateAccount: View {
                 lastName = ""
                 password = ""
                 passwordVerification = ""
-                self.loginStatusMessage = "Successfully created user: \(result?.user.uid ?? "")"
+                self.statusMessage = "Successfully created user: \(result?.user.uid ?? "")"
             }
         }else{
-            self.loginStatusMessage = "Das Passwort und das wiederholte Passwort stimmen nicht überein"
+            self.statusMessage = "Das Passwort und das wiederholte Passwort stimmen nicht überein"
             return
         }
     }

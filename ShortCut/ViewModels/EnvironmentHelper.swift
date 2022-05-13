@@ -31,7 +31,7 @@ class EnvironmentHelper: ObservableObject {
             let db = Firestore.firestore()
         db.collection("Users").document(relatedUID).setData(["Vorname": firstName, "Nachname": lastName, "EMail": email,"Rolle": role, "Gespeicherte Maschinen": [String]()]){ error in
                 if error == nil {
-                    self.getAllUsers()
+                    //Code for Succesfull creation of User
                 }
                 else{
                     //Handle Errors
@@ -41,29 +41,7 @@ class EnvironmentHelper: ObservableObject {
     
     
     
-    func getAllMachineStates() {
-        let db = Firestore.firestore()
-        db.collection("Zustände").getDocuments { snapshot, error in
-                if error == nil {
-                    if let snapshot = snapshot {
-                        DispatchQueue.main.async {
-                            self.machineStates = snapshot.documents.map { d in
-                                return MachineState(id: d.documentID,
-                                                    description: d["Beschreibung"] as? String ?? "",
-                                               creatorName: d["ErstellerName"] as? String ?? "",
-                                               machineID: d["MaschinenID"] as? String ?? "",
-                                               creationDate: d["Erstellungsdatum"] as? Timestamp ?? Timestamp() )
-                            }
-                        }
-                    }
-                    else{
-                        //handle Errors
-                    }
-                }
-            }
-        
-        
-    }
+    
     func getAllUsers() {
         let db = Firestore.firestore()
         
