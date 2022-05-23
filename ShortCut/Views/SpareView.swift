@@ -94,7 +94,9 @@ struct SpareView: View {
     func createOrderText()->String{
         var orderText: String = "Hallo, \n wir benötigen folgende Ersatzteile: \n"
         for index in 0..<(spareViewModel.spareList.count){
-            orderText += "\(spareInformations.spareValues[index])x \(spareViewModel.spareList[index].description1GER) \n"
+            if (spareInformations.spareValues[index] > 0){
+                orderText += "\(spareInformations.spareValues[index])x \(spareViewModel.spareList[index].description1GER) \n"
+            }
         }
         return orderText
     }
@@ -121,7 +123,7 @@ struct SingleSpare: View {
                 .font(.body)
             Text("Verschleißintervall: \(wearIntervall)")
                     .font(.footnote)
-            Stepper("Anzahl: \(amount)", value: $amount, in: 0...Int.max)
+                Stepper("Anzahl: \(spareInformations.spareValues[spareNumber])", value: $spareInformations.spareValues[spareNumber], in: 0...Int.max)
             }
         }.onAppear {
             let storageRef = Storage.storage().reference()
