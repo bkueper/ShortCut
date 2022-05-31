@@ -69,6 +69,7 @@
 		9988864627B410C800434054 /* Spare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spare.swift; sourceTree = "<group>"; };
 		998CD4AD27BAAC0500B4AB1B /* SpareViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpareViewModel.swift; sourceTree = "<group>"; };
 		998CD4AF27BAAF2F00B4AB1B /* MachineSpare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineSpare.swift; sourceTree = "<group>"; };
+		999DDB982846472E005C26F2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		99A08C7A27C3BE9B00B91BDE /* Contactperson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contactperson.swift; sourceTree = "<group>"; };
 		99AB0B3227A439F0007E618E /* QRCodeScanningAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = QRCodeScanningAnimation.json; sourceTree = "<group>"; };
 		99CAFB8927A0348900ACAB0A /* QRCodeAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = QRCodeAnimation.json; sourceTree = "<group>"; };
@@ -189,6 +190,7 @@
 		B7809EAA2770BA7200D1FA1C /* ShortCut */ = {
 			isa = PBXGroup;
 			children = (
+				999DDB982846472E005C26F2 /* Info.plist */,
 				997CD11627980CEB009EE598 /* Views */,
 				997CD11327980561009EE598 /* ViewModels */,
 				997CD1102798048A009EE598 /* Models */,
@@ -461,6 +463,7 @@
 				DEVELOPMENT_TEAM = 7B4H7ALW2C;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ShortCut/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Kamera für QR- Code Scan erforderlich.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Zugriff auf Galerie benötigt um Bild zu speichern";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -493,6 +496,7 @@
 				DEVELOPMENT_TEAM = 7B4H7ALW2C;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ShortCut/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Kamera für QR- Code Scan erforderlich.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Zugriff auf Galerie benötigt um Bild zu speichern";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

@@ -157,7 +157,7 @@ var body: some View{
                     
                 }
                 //ROLLE: alle Hersteller
-                if(environment.currentUser.role == "Hersteller" || environment.currentUser.role == "Hersteller Admin"){
+                if(environment.currentUser.role == "Hersteller User" || environment.currentUser.role == "Hersteller Service" || environment.currentUser.role == "Hersteller Manager" || environment.currentUser.role == "Hersteller Admin"){
                     Section(header: Text("Maschinendateien").foregroundColor(Color.white), footer: Text("Einen der Menüpunkte anklicken um jeweilige Datei anzeigen zu lassen").foregroundColor(Color.white)){
                         ForEach((0..<documentViewModel.documentList.count), id: \.self){document in
                             NavigationLink(destination: SwiftUIWebView(url: URL(string: documentViewModel.documentList[document].URL))){
@@ -167,7 +167,7 @@ var body: some View{
                     }
                 }
                 
-                if(environment.currentUser.role == "Hersteller" || environment.currentUser.role == "Hersteller Admin"){
+                if(environment.currentUser.role == "Hersteller User" || environment.currentUser.role == "Hersteller Service" || environment.currentUser.role == "Hersteller Manager" || environment.currentUser.role == "Hersteller Admin"){
                     if(!customerViewModel.customerContactpersons.isEmpty){
                         Section(header: Text("Ansprechpartner").foregroundColor(Color.white), footer: Text("Rufen Sie die Ansprechpatner des Kunden an oder schreiben Sie eine EMail.").foregroundColor(Color.white)){
                             ForEach((0..<customerViewModel.customerContactpersons.count), id: \.self){contactperson in
@@ -207,7 +207,7 @@ var body: some View{
                         }
                     }
                 }
-                if(environment.currentUser.role == "Kunde" || environment.currentUser.role == "Hersteller Admin"){
+                if(environment.currentUser.role == "Kunde User" || environment.currentUser.role == "Kunde Service" || environment.currentUser.role == "Kunde Manager" || environment.currentUser.role == "Kunde Admin" || environment.currentUser.role == "Hersteller Admin"){
                     Section(header: Text("Kundenservice").foregroundColor(Color.white), footer: Text("Kontaktieren Sie bei Fragen oder Problemen unseren Kundenservice.").foregroundColor(Color.white)){
                         NavigationLink(destination: SpareView()){
                             Text("Ersatzteile bestellen")
@@ -230,7 +230,7 @@ var body: some View{
                             }
                         }
                     }
-                if(environment.currentUser.role == "Hersteller" || environment.currentUser.role == "Hersteller Admin"){
+                if(environment.currentUser.role == "Hersteller User" || environment.currentUser.role == "Hersteller Service" || environment.currentUser.role == "Hersteller Manager" || environment.currentUser.role == "Hersteller Admin"){
                     Section(header: Text("Bauzustand").foregroundColor(Color.white), footer: Text("Die abgehakten Bauzustände sind bereits erreicht. Wenn Sie einen neuen Bauzustand erreicht haben markieren Sie den Bauzustand als erledigt.").foregroundColor(Color.white)){
                         Group{
                             NavigationLink(destination: ReportStatus()){
