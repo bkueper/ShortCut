@@ -17,7 +17,7 @@ class EnvironmentHelper: ObservableObject {
     @Published var machineSpareList = [MachineSpare]()
     
     @Published var currentUser: User = User(id: "",  firstName: "", lastName: "", email: "", role: "",savedMachines: [""])
-    @Published var currentMachine: Machine = Machine(id: "", orderDate: "", orderNumber: "", spareServiceEmail: "", spareServicePhone: "", warrantyBegin: "", warrantyEnd: "", installationEnd: "", krauseServiceEmail: "", deliveryDate: "", serialNumber: "", serviceEmail: "", serviceHotline: "", type: "", customerID: "", machineNumber: "")
+    @Published var currentMachine: Machine = Machine(id: "", orderDate: "", orderNumber: "", spareServiceEmail: "", spareServicePhone: "", warrantyBegin: "", warrantyEnd: "", installationEnd: "", krauseServiceEmail: "", deliveryDate: "", serialNumber: "", serviceEmail: "", serviceHotline: "", type: "", customerID: "", machineNumber: "", favorisedByUsersList: [""])
     
     
     @Published var customerList = [Customer]()
@@ -134,9 +134,10 @@ class EnvironmentHelper: ObservableObject {
                 let type = data?["Typ"] as? String ?? ""
                 let customerID = data?["KundenID"] as? String ?? ""
                 let machineNumber = data?["Maschinennummer"] as? String ?? ""
-                self.currentMachine = Machine(id: id, orderDate: orderDate, orderNumber: orderNumber, spareServiceEmail: spareServiceEmail, spareServicePhone: spareServicePhone, warrantyBegin: warrantyBegin, warrantyEnd: warrantyEnd, installationEnd: installationEnd, krauseServiceEmail: krauseServiceEmail, deliveryDate: deliveryDate, serialNumber: serialNumber, serviceEmail: serviceEmail, serviceHotline: serviceHotline, type: type,customerID: customerID, machineNumber: machineNumber)
+                let favorisedByUsersList = data?["FavorisiertVonUsernListe"] as? [String] ?? [""]
+                self.currentMachine = Machine(id: id, orderDate: orderDate, orderNumber: orderNumber, spareServiceEmail: spareServiceEmail, spareServicePhone: spareServicePhone, warrantyBegin: warrantyBegin, warrantyEnd: warrantyEnd, installationEnd: installationEnd, krauseServiceEmail: krauseServiceEmail, deliveryDate: deliveryDate, serialNumber: serialNumber, serviceEmail: serviceEmail, serviceHotline: serviceHotline, type: type,customerID: customerID, machineNumber: machineNumber, favorisedByUsersList: favorisedByUsersList)
             } else {
-                self.currentMachine = Machine(id: "", orderDate: "", orderNumber: "", spareServiceEmail: "", spareServicePhone: "", warrantyBegin: "", warrantyEnd: "", installationEnd: "", krauseServiceEmail: "", deliveryDate: "", serialNumber: "", serviceEmail: "", serviceHotline: "", type: "",customerID: "", machineNumber: "")
+                self.currentMachine = Machine(id: "", orderDate: "", orderNumber: "", spareServiceEmail: "", spareServicePhone: "", warrantyBegin: "", warrantyEnd: "", installationEnd: "", krauseServiceEmail: "", deliveryDate: "", serialNumber: "", serviceEmail: "", serviceHotline: "", type: "",customerID: "", machineNumber: "", favorisedByUsersList: [""])
                 print("Document does not exist")
                 }
             }

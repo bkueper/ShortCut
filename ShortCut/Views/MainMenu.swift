@@ -11,7 +11,7 @@ import Firebase
 struct MainMenu: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var environment: EnvironmentHelper
-    @StateObject var savedMachinesViewModel = SavedMachinesViewModel()
+    @StateObject var savedMachinesViewModel = FavorisedMachinesViewModel()
     @State var isShowingWelcomePopover = true
     @State var showConfirmationDialog = false
     
@@ -32,7 +32,7 @@ struct MainMenu: View {
                 .tabItem{
                     Image(systemName: "qrcode")
                 }
-            DocumentArchive()
+            FavorisedMachines()
                 .tabItem {
                     Image(systemName: "star.circle.fill")
                 }
@@ -46,7 +46,7 @@ struct MainMenu: View {
         .confirmationDialog("Wollen Sie sich wirklich ausloggen?", isPresented: $showConfirmationDialog,titleVisibility: .visible) {
             Button("Ausloggen",role: .destructive) {
                 do{
-                    environment.currentMachine = Machine(id: "", orderDate: "", orderNumber: "", spareServiceEmail: "", spareServicePhone: "", warrantyBegin: "", warrantyEnd: "", installationEnd: "", krauseServiceEmail: "", deliveryDate: "", serialNumber: "", serviceEmail: "", serviceHotline: "", type: "", customerID: "", machineNumber: "")
+                    environment.currentMachine = Machine(id: "", orderDate: "", orderNumber: "", spareServiceEmail: "", spareServicePhone: "", warrantyBegin: "", warrantyEnd: "", installationEnd: "", krauseServiceEmail: "", deliveryDate: "", serialNumber: "", serviceEmail: "", serviceHotline: "", type: "", customerID: "", machineNumber: "", favorisedByUsersList: [""])
                     environment.currentUser = User(id: "", firstName: "", lastName: "", email: "", role: "", savedMachines: [""])
                     let currentUser = Auth.auth().currentUser?.uid
                     try Auth.auth().signOut()

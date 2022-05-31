@@ -24,7 +24,7 @@ struct Machine: Identifiable, Codable{
     var type: String
     var customerID: String
     var machineNumber: String
-    
+    var favorisedByUsersList: [String]
     enum CodingKeys: String, CodingKey{
         case id
         case orderDate = "Bestelldatum"
@@ -42,6 +42,6 @@ struct Machine: Identifiable, Codable{
         case type = "Typ"
         case customerID = "KundenID"
         case machineNumber = "Maschinennummer"
-        
+        case favorisedByUsersList = "FavorisiertVonUsernListe"
     }
 }

@@ -248,13 +248,13 @@ var body: some View{
                     customerViewModel.getAllContactPersonsByCustomerID(customerID: environment.currentMachine.customerID)
                     documentViewModel.getAllDocumentsByMachineID(machineID: environment.currentMachine.id ?? "")
                 }
-            if(!environment.currentUser.savedMachines.contains(environment.currentMachine.id ?? "") && showFavoriteButton == true){
+            if(!environment.currentMachine.favorisedByUsersList.contains(environment.currentUser.id ?? "") && showFavoriteButton == true){
                     Button{
                         showFavoriteButton = false
                         let db = Firestore.firestore()
-                        db.collection("Users").document(environment.currentUser.id ?? "").updateData([
+                        db.collection("Maschinen").document(environment.currentMachine.id ?? "").updateData([
                     
-                            "Gespeicherte Maschinen": FieldValue.arrayUnion([environment.currentMachine.id ?? ""])
+                            "FavorisiertVonUsernListe": FieldValue.arrayUnion([environment.currentUser.id ?? ""])
                         ])
                     }label: {
                         VStack{

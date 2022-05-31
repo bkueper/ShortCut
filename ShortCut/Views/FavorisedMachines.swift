@@ -7,9 +7,9 @@
 
 import SwiftUI
 import Firebase
-struct DocumentArchive: View {
+struct FavorisedMachines: View {
     @EnvironmentObject var environment: EnvironmentHelper
-    @EnvironmentObject var savedMachinesViewModel: SavedMachinesViewModel
+    @EnvironmentObject var savedMachinesViewModel: FavorisedMachinesViewModel
     @State var showNavigationLink = false
     @State var showDeleteRequest = false
     @State var clickedMachineLinkMachineID: String = ""
@@ -42,18 +42,6 @@ struct DocumentArchive: View {
                                     
                             }
                         }
-                Button{
-                    environment.setCurrentUserByUID(UID: environment.currentUser.id ?? "")
-                    savedMachinesViewModel.savedMachinesList.removeAll()
-                    savedMachinesViewModel.getAllSavedMachineIDsOfUser(UserId: environment.currentUser.id ?? "")
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        savedMachinesViewModel.getAllSavedMachines()
-                    }
-                }label: {
-                    Image(systemName: "arrow.counterclockwise.circle.fill")
-                        .resizable()
-                        .frame(width: 48, height: 48)
-                }.foregroundColor(Color.blue)
                     
                 Spacer()
                     
@@ -72,25 +60,12 @@ struct DocumentArchive: View {
                 }
             }
             .onAppear {
-                if(savedMachinesViewModel.savedMachinesList.isEmpty){
-                    environment.setCurrentUserByUID(UID: environment.currentUser.id ?? "")
-                    savedMachinesViewModel.savedMachinesList.removeAll()
-                    savedMachinesViewModel.getAllSavedMachineIDsOfUser(UserId: environment.currentUser.id ?? "")
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        savedMachinesViewModel.getAllSavedMachines()
-                        }
-                    }
+                savedMachinesViewModel.getAllFavorisedMachinesByUserID(userId: environment.currentUser.id ?? "")
                 }
             }
             .confirmationDialog("Wollen Sie die Maschine \(longPressedMachineID) aus Favoriten entfernen?", isPresented: $showDeleteRequest,titleVisibility: .visible) {
                 Button("Maschine entfernen",role: .destructive) {
                     savedMachinesViewModel.deleteSavedMachine(machineID: longPressedMachineID, userID: environment.currentUser.id ?? "")
-                    environment.setCurrentUserByUID(UID: environment.currentUser.id ?? "")
-                    savedMachinesViewModel.savedMachinesList.removeAll()
-                    savedMachinesViewModel.getAllSavedMachineIDsOfUser(UserId: environment.currentUser.id ?? "")
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        savedMachinesViewModel.getAllSavedMachines()
-                        }
                     print("Maschine entfernt")
                 }
                 Button("Abbrechen",role: .cancel){}
@@ -104,10 +79,6 @@ struct DocumentArchive: View {
 }
 
 
-struct DocumentArchive_Previews: PreviewProvider {
-    static var previews: some View {
-        DocumentArchive()
-    }
-}
+
 
 
